@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
 import { useRecoilValue } from "recoil";
-import { atomState } from "../../../atom";
+import { atomState } from "../../../../atom";
 import { NodeContainer } from "../../node-container";
 
 function SliceNode({ onCallback, id }) {

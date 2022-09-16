@@ -16,7 +16,7 @@ import {
 } from "chart.js";
 import { useRecoilValue } from "recoil";
 import { NodeContainer } from "../../node-container";
-import { atomState } from "../../../atom";
+import { atomState } from "../../../../atom";
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend, CategoryScale, BarElement, Title);
 

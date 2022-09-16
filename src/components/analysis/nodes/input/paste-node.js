@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormControl, FormLabel, Select, Stack, Textarea } from "@chakra-ui/react";
 import { NodeContainer } from "../../node-container";
-import { convertCsvToJson } from "../../../helper/convert";
+import { convertCsvToJson } from "../../../../helper/convert";
 
 const selectPaste = ["JSON", "CSV"];
 

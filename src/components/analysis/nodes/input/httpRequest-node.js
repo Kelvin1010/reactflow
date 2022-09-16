@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
 import axios from "axios";
 import { NodeContainer } from "../../node-container";
-import { convertCsvToJson } from "../../../helper/convert";
+import { convertCsvToJson } from "../../../../helper/convert";
 
 function HttpRequest({ onCallback }) {
   const [url, setUrl] = useState("");

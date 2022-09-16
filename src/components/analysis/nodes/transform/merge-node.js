@@ -4,7 +4,7 @@ import { getConnectedEdges, getIncomers, useEdges, useNodes, useReactFlow } from
 import { NodeContainer } from "../../node-container";
 import { HandleLeft } from "../../handle-left";
 import { useRecoilValue } from "recoil";
-import { atomState } from "../../../atom";
+import { atomState } from "../../../../atom";
 
 const initialState = {
   column1: "",

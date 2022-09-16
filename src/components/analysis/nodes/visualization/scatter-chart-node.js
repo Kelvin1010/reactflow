@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
+import { Scatter } from "react-chartjs-2";
 import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
-import { Chart as ChartJS, LinearScale, Tooltip, Legend, CategoryScale, BarElement, Title } from "chart.js";
+import { Chart as ChartJS, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import { useRecoilValue } from "recoil";
 import { NodeContainer } from "../../node-container";
-import { atomState } from "../../../atom";
+import { atomState } from "../../../../atom";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 const options = {
   scales: {
@@ -22,7 +22,7 @@ const initialState = {
   yColumn: "",
 };
 
-function BarChartNode({ onCallback, id }) {
+function ScatterChartNode({ onCallback, id }) {
   const { getNode } = useReactFlow();
   const allNodes = useNodes();
   const allEdges = useEdges();
@@ -40,7 +40,7 @@ function BarChartNode({ onCallback, id }) {
         xColumn: columnsParent.includes(input.xColumn) ? input.xColumn : columnsParent[0],
         yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
       };
-      var output = barChartTransform(atomParent.data.output, initialInput);
+      var output = scatter(atomParent.data.output, initialInput);
       setInput(initialInput);
       setOutput(output);
       onCallback({ output: atomParent.data.output, input: initialInput });
@@ -56,12 +56,11 @@ function BarChartNode({ onCallback, id }) {
 
   function handleChangeInput(event) {
     var { value, name } = event.target;
-    var output = barChartTransform(atomParent.data.output, { ...input, [name]: value });
+    var output = scatter(atomParent.data.output, { ...input, [name]: value });
     setInput({ ...input, [name]: value });
     setOutput(output);
     onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
   }
-  console.log(atomParent)
 
   return (
     <Box>
@@ -91,16 +90,14 @@ function BarChartNode({ onCallback, id }) {
               ))}
             </Select>
           </FormControl>
-          <Bar
+          <Scatter
             options={options}
             data={{
-              labels: output.map((i) => i.x),
               datasets: [
                 {
                   label: "dataset",
-                  data: output.map((i) => i.y),
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                  data: output,
+                  backgroundColor: "rgba(255, 99, 132, 1)",
                 },
               ],
             }}
@@ -111,28 +108,27 @@ function BarChartNode({ onCallback, id }) {
   );
 }
 
-function barChartTransform(input, { xColumn, yColumn }) {
+function scatter(input, { xColumn, yColumn }) {
   if (!Array.isArray(input)) {
     return [];
   }
-
   return input?.map((i) => ({ x: i[xColumn], y: i[yColumn] }));
 }
 
 function Sidebar({ onDragStart }) {
   return (
-    <div className="dndnode" onDragStart={(event) => onDragStart(event, "bar-chart")} draggable>
-      Biểu đồ cột
+    <div className="dndnode" onDragStart={(event) => onDragStart(event, "scatter-chart")} draggable>
+      Biểu đồ phân tán
     </div>
   );
 }
 
-export function BarChartWrapper(props) {
+export function ScatterChartWrapper(props) {
   return (
-    <NodeContainer {...props} label="Biểu đồ cột" isLeftHandle className="chart-container">
-      <BarChartNode />
+    <NodeContainer {...props} label="Biểu đồ phân tán" isLeftHandle className="chart-container">
+      <ScatterChartNode />
     </NodeContainer>
   );
 }
 
-BarChartWrapper.Sidebar = Sidebar;
+ScatterChartWrapper.Sidebar = Sidebar;

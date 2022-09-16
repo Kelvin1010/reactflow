@@ -18,7 +18,7 @@ import {
   GroupChartWrapper,
 } from "./nodes";
 
-export function Sidebar() {
+export function SidebarAnalysis() {
   const onDragStart = (event, nodeType) => {
     event.dataTransfer.setData("application/reactflow", nodeType);
     event.dataTransfer.effectAllowed = "move";

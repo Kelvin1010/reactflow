@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { Scatter } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+import * as d3 from "d3-array";
 import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
-import { Chart as ChartJS, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, LinearScale, Tooltip, Legend, CategoryScale, BarElement, Title } from "chart.js";
 import { useRecoilValue } from "recoil";
+import isNumber from "lodash/isNumber";
 import { NodeContainer } from "../../node-container";
-import { atomState } from "../../../atom";
+import { atomState } from "../../../../atom";
 
-ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const options = {
   scales: {
@@ -18,11 +20,10 @@ const options = {
 };
 
 const initialState = {
-  xColumn: "",
-  yColumn: "",
+  column: "",
 };
 
-function ScatterChartNode({ onCallback, id }) {
+function HistogramChartNode({ onCallback, id }) {
   const { getNode } = useReactFlow();
   const allNodes = useNodes();
   const allEdges = useEdges();
@@ -37,10 +38,9 @@ function ScatterChartNode({ onCallback, id }) {
     if (atomParent?.data) {
       var columnsParent = Object.keys(atomParent.data?.output?.[0] ?? {});
       var initialInput = {
-        xColumn: columnsParent.includes(input.xColumn) ? input.xColumn : columnsParent[0],
-        yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
+        column: columnsParent.includes(input.column) ? input.column : columnsParent[0],
       };
-      var output = scatter(atomParent.data.output, initialInput);
+      var output = histogramTransform(atomParent.data.output, initialInput);
       setInput(initialInput);
       setOutput(output);
       onCallback({ output: atomParent.data.output, input: initialInput });
@@ -56,10 +56,10 @@ function ScatterChartNode({ onCallback, id }) {
 
   function handleChangeInput(event) {
     var { value, name } = event.target;
-    var output = scatter(atomParent.data.output, { ...input, [name]: value });
+    var output = histogramTransform(atomParent.data.output, { ...input, [name]: value });
     setInput({ ...input, [name]: value });
     setOutput(output);
-    onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
+    onCallback({ input: { ...input, [name]: value } });
   }
 
   return (
@@ -72,7 +72,7 @@ function ScatterChartNode({ onCallback, id }) {
         <Stack>
           <FormControl>
             <FormLabel>x-axis</FormLabel>
-            <Select name="xColumn" value={input.xColumn} onChange={handleChangeInput}>
+            <Select name="column" value={input.column} onChange={handleChangeInput}>
               {columns.map((value) => (
                 <option key={value} value={value}>
                   {value}
@@ -80,24 +80,16 @@ function ScatterChartNode({ onCallback, id }) {
               ))}
             </Select>
           </FormControl>
-          <FormControl>
-            <FormLabel>y-axis</FormLabel>
-            <Select name="yColumn" value={input.yColumn} onChange={handleChangeInput}>
-              {columns.map((value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          <Scatter
+          <Bar
             options={options}
             data={{
+              labels: output.map((i) => i.x),
               datasets: [
                 {
-                  label: "dataset",
-                  data: output,
-                  backgroundColor: "rgba(255, 99, 132, 1)",
+                  label: input.column,
+                  data: output.map((i) => i.y),
+                  borderColor: "rgb(255, 99, 132)",
+                  backgroundColor: "rgba(255, 99, 132, 0.5)",
                 },
               ],
             }}
@@ -108,27 +100,46 @@ function ScatterChartNode({ onCallback, id }) {
   );
 }
 
-function scatter(input, { xColumn, yColumn }) {
-  if (!Array.isArray(input)) {
+function histogramTransform(input, { column }) {
+  if (!isNumber(input[0][column])) {
     return [];
   }
-  return input?.map((i) => ({ x: i[xColumn], y: i[yColumn] }));
+
+  const value = binTransform(input, { value: (d) => d[column] });
+  return value;
+}
+
+function binTransform(data, { value, x = value, y = () => 1, thresholds = 15 }) {
+  const X = d3.map(data, x);
+  const Y0 = d3.map(data, y);
+  const I = d3.range(X.length);
+
+  const bins = d3
+    .bin()
+    .thresholds(thresholds)
+    .value((i) => X[i])(I);
+  const Y = Array.from(bins, (I) => d3.sum(I, (i) => Y0[i]));
+
+  return bins.map((d, i) => ({
+    x: d.x1,
+    y: Y[i],
+  }));
 }
 
 function Sidebar({ onDragStart }) {
   return (
-    <div className="dndnode" onDragStart={(event) => onDragStart(event, "scatter-chart")} draggable>
-      Biểu đồ phân tán
+    <div className="dndnode" onDragStart={(event) => onDragStart(event, "histogram-chart")} draggable>
+      Biểu đồ Histogram
     </div>
   );
 }
 
-export function ScatterChartWrapper(props) {
+export function HistogramChartWrapper(props) {
   return (
-    <NodeContainer {...props} label="Biểu đồ phân tán" isLeftHandle className="chart-container">
-      <ScatterChartNode />
+    <NodeContainer {...props} label="Biểu đồ Histogram" isLeftHandle className="chart-container">
+      <HistogramChartNode />
     </NodeContainer>
   );
 }
 
-ScatterChartWrapper.Sidebar = Sidebar;
+HistogramChartWrapper.Sidebar = Sidebar;

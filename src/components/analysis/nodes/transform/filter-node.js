@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { NodeContainer } from "../../node-container";
-import { CSVLink } from "react-csv";
-import { Button, Stack, Text } from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, Input, Select, Stack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
+import { NodeContainer } from "../../node-container";
+import { HandleLeft } from "../../handle-left";
 import { useDebounce } from "react-use";
 import { useRecoilValue } from "recoil";
-import { atomState } from "../../../atom";
+import { atomState } from "../../../../atom";
 
-const initialState = {};
+const initialState = {
+  column: "",
+  conditionId: "",
+  conditionValue: "",
+};
 
-function ExportData({ onCallback, id, isConnectable }) {
+function FilterNode({ onCallback, id, isConnectable }) {
   const { getNode } = useReactFlow();
   const allNodes = useNodes();
   const allEdges = useEdges();
@@ -21,7 +25,7 @@ function ExportData({ onCallback, id, isConnectable }) {
 
   useDebounce(
     () => {
-      if (input.column?.length && input.conditionId) {
+      if (input.column.length && input.conditionId) {
         var output = filter(atomParent.data.output, input);
         onCallback({ output, input });
       }
@@ -51,37 +55,49 @@ function ExportData({ onCallback, id, isConnectable }) {
     }
   }, [atomParent?.data]);
 
-  function randomString(len, charSet) {
-    charSet = charSet || "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    var randomString = "";
-    for (var i = 0; i < len; i++) {
-      var randomPoz = Math.floor(Math.random() * charSet.length);
-      randomString += charSet.substring(randomPoz, randomPoz + 1);
-    }
-    return randomString;
+  function handleChangeInput(event) {
+    var { value, name } = event.target;
+    setInput({ ...input, [name]: value });
   }
 
-  const fileNameCsv = `your-file-${randomString(
-    10,
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
-  )}.csv`;
-
-  const handleExportDataToJson = () => {
-    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(JSON.stringify(atomParent?.data))}`;
-    const link = document.createElement("a");
-    link.href = jsonString;
-    link.download = `data_${randomString(10, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")}.json`;
-    link.click();
-  };
-  const dataDown = [];
-  dataDown.push(atomParent?.data);
-  const DataCsv = dataDown[0]?.output;
   return (
     <Stack>
-      <CSVLink filename={fileNameCsv} data={DataCsv || []}>
-        <Button width={"100%"}>Download csv</Button>
-      </CSVLink>
-      <Button onClick={handleExportDataToJson}>Download json</Button>
+      <FormControl>
+        <FormLabel>Column name:</FormLabel>
+        <Box position="relative">
+          <Select name="column" value={input.column} onChange={handleChangeInput}>
+            {columns.length > 0 ? (
+              columns.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))
+            ) : (
+              <option value={""} disabled>
+                ← kết nối dataset...
+              </option>
+            )}
+          </Select>
+          <HandleLeft isConnectable={isConnectable} />
+        </Box>
+      </FormControl>
+      {columns.length > 0 && (
+        <FormControl>
+          <FormLabel>Condition:</FormLabel>
+          <Select name="conditionId" value={input.conditionId} onChange={handleChangeInput} pb="2">
+            <option value="">select condition</option>
+            <option value="5">text is exactly</option>
+            <option value="6">text is not exactly</option>
+            <option value="7">text includes</option>
+            <option value="8">text does not includes</option>
+            <option value="notnull">data is not empty or null</option>
+            <option value="regex">data matches regex</option>
+          </Select>
+          {input.conditionId && (
+            <Input name="conditionValue" value={input.conditionValue} onChange={handleChangeInput} />
+          )}
+        </FormControl>
+      )}
     </Stack>
   );
 }
@@ -120,18 +136,18 @@ function filter(input, { column, conditionId, conditionValue }) {
 
 function Sidebar({ onDragStart }) {
   return (
-    <div className="dndnode" onDragStart={(event) => onDragStart(event, "export")} draggable>
-      Xuất file
+    <div className="dndnode" onDragStart={(event) => onDragStart(event, "filter")} draggable>
+      Lọc
     </div>
   );
 }
 
-export function ExportDataWrapper(props) {
+export function FilterWrapper(props) {
   return (
-    <NodeContainer {...props} label="Xuất file" isLeftHandle>
-      <ExportData />
+    <NodeContainer {...props} label="Lọc">
+      <FilterNode />
     </NodeContainer>
   );
 }
 
-ExportDataWrapper.Sidebar = Sidebar;
+FilterWrapper.Sidebar = Sidebar;

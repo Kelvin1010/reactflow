@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import * as d3 from "d3-array";
 import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
 import { Chart as ChartJS, LinearScale, Tooltip, Legend, CategoryScale, BarElement, Title } from "chart.js";
 import { useRecoilValue } from "recoil";
-import isNumber from "lodash/isNumber";
 import { NodeContainer } from "../../node-container";
-import { atomState } from "../../../atom";
+import { atomState } from "../../../../atom";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -20,10 +18,11 @@ const options = {
 };
 
 const initialState = {
-  column: "",
+  xColumn: "",
+  yColumn: "",
 };
 
-function HistogramChartNode({ onCallback, id }) {
+function BarChartNode({ onCallback, id }) {
   const { getNode } = useReactFlow();
   const allNodes = useNodes();
   const allEdges = useEdges();
@@ -38,9 +37,10 @@ function HistogramChartNode({ onCallback, id }) {
     if (atomParent?.data) {
       var columnsParent = Object.keys(atomParent.data?.output?.[0] ?? {});
       var initialInput = {
-        column: columnsParent.includes(input.column) ? input.column : columnsParent[0],
+        xColumn: columnsParent.includes(input.xColumn) ? input.xColumn : columnsParent[0],
+        yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
       };
-      var output = histogramTransform(atomParent.data.output, initialInput);
+      var output = barChartTransform(atomParent.data.output, initialInput);
       setInput(initialInput);
       setOutput(output);
       onCallback({ output: atomParent.data.output, input: initialInput });
@@ -56,11 +56,12 @@ function HistogramChartNode({ onCallback, id }) {
 
   function handleChangeInput(event) {
     var { value, name } = event.target;
-    var output = histogramTransform(atomParent.data.output, { ...input, [name]: value });
+    var output = barChartTransform(atomParent.data.output, { ...input, [name]: value });
     setInput({ ...input, [name]: value });
     setOutput(output);
-    onCallback({ input: { ...input, [name]: value } });
+    onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
   }
+  console.log(atomParent)
 
   return (
     <Box>
@@ -72,7 +73,17 @@ function HistogramChartNode({ onCallback, id }) {
         <Stack>
           <FormControl>
             <FormLabel>x-axis</FormLabel>
-            <Select name="column" value={input.column} onChange={handleChangeInput}>
+            <Select name="xColumn" value={input.xColumn} onChange={handleChangeInput}>
+              {columns.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel>y-axis</FormLabel>
+            <Select name="yColumn" value={input.yColumn} onChange={handleChangeInput}>
               {columns.map((value) => (
                 <option key={value} value={value}>
                   {value}
@@ -86,7 +97,7 @@ function HistogramChartNode({ onCallback, id }) {
               labels: output.map((i) => i.x),
               datasets: [
                 {
-                  label: input.column,
+                  label: "dataset",
                   data: output.map((i) => i.y),
                   borderColor: "rgb(255, 99, 132)",
                   backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -100,46 +111,28 @@ function HistogramChartNode({ onCallback, id }) {
   );
 }
 
-function histogramTransform(input, { column }) {
-  if (!isNumber(input[0][column])) {
+function barChartTransform(input, { xColumn, yColumn }) {
+  if (!Array.isArray(input)) {
     return [];
   }
 
-  const value = binTransform(input, { value: (d) => d[column] });
-  return value;
-}
-
-function binTransform(data, { value, x = value, y = () => 1, thresholds = 15 }) {
-  const X = d3.map(data, x);
-  const Y0 = d3.map(data, y);
-  const I = d3.range(X.length);
-
-  const bins = d3
-    .bin()
-    .thresholds(thresholds)
-    .value((i) => X[i])(I);
-  const Y = Array.from(bins, (I) => d3.sum(I, (i) => Y0[i]));
-
-  return bins.map((d, i) => ({
-    x: d.x1,
-    y: Y[i],
-  }));
+  return input?.map((i) => ({ x: i[xColumn], y: i[yColumn] }));
 }
 
 function Sidebar({ onDragStart }) {
   return (
-    <div className="dndnode" onDragStart={(event) => onDragStart(event, "histogram-chart")} draggable>
-      Biểu đồ Histogram
+    <div className="dndnode" onDragStart={(event) => onDragStart(event, "bar-chart")} draggable>
+      Biểu đồ cột
     </div>
   );
 }
 
-export function HistogramChartWrapper(props) {
+export function BarChartWrapper(props) {
   return (
-    <NodeContainer {...props} label="Biểu đồ Histogram" isLeftHandle className="chart-container">
-      <HistogramChartNode />
+    <NodeContainer {...props} label="Biểu đồ cột" isLeftHandle className="chart-container">
+      <BarChartNode />
     </NodeContainer>
   );
 }
 
-HistogramChartWrapper.Sidebar = Sidebar;
+BarChartWrapper.Sidebar = Sidebar;

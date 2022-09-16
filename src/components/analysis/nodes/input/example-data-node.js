@@ -1,8 +1,8 @@
 import { Select } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { NodeContainer } from "../../node-container";
-import countries_indicators from "../../../data/countries_indicators.json";
-import ufo_signhtings from "../../../data/ufo-signhtings.json";
+import countries_indicators from "../../../../data/countries_indicators.json";
+import ufo_signhtings from "../../../../data/ufo-signhtings.json";
 
 function ExampleData({ onCallback, data }) {
   const [option, setOption] = useState("");

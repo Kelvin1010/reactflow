@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { NodeContainer } from "../../node-container";
 import { read, utils } from "xlsx";
 import { Box, Button, Input, Text, VisuallyHidden } from "@chakra-ui/react";
-import { convertCsvToJson } from "../../../helper/convert";
+import { convertCsvToJson } from "../../../../helper/convert";
 
 function FileData({ onCallback }) {
   const [file, setFile] = useState(null);

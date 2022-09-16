@@ -8,7 +8,7 @@ import { useRecoilValue } from "recoil";
 import * as d3 from "d3-array";
 import { NodeContainer } from "../../node-container";
 import { HandleLeft } from "../../handle-left";
-import { atomState } from "../../../atom";
+import { atomState } from "../../../../atom";
 
 const initialState = {
   column: "",

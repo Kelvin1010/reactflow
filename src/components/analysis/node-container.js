@@ -4,7 +4,7 @@ import { Box, CloseButton, Divider, Stack, Text } from "@chakra-ui/react";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import { getConnectedEdges, Handle, useReactFlow, useStoreApi } from "react-flow-renderer";
 import { useRecoilState } from "recoil";
-import { atomState } from "../atom";
+import { atomState } from "../../atom";
 
 export function NodeContainer({
   children,
