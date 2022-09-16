@@ -1,0 +1,31 @@
+.infonode{
+    height: 92vh;
+    width: 15vw;
+    background-image: url('../../public/sumo-landing-bg.png');
+    padding: 5px;
+    color: white;
+}
+.infonode-value{
+    margin: 10px 0;
+}
+.infonode .infonode-text{
+    color: black !important;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+}
+.infonode .infonode-button button{
+    width: 100%;
+    background-color: teal;
+    margin: 10px 0;
+    border-radius: 7px;
+    padding: 4px;
+    text-align: center;
+}
+.infonode .infonode-close button{
+    width: 100%;
+    border-radius: 7px;
+    background-color: red;
+    padding: 4px;
+    text-align: center;
+}

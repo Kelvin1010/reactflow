@@ -23,6 +23,7 @@
     "react-use": "^17.4.0",
     "recoil": "^0.7.5",
     "web-vitals": "^2.1.4",
+    "web-worker": "^1.2.0",
     "xlsx": "^0.18.5"
   },
   "scripts": {

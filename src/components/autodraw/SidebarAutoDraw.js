@@ -4,7 +4,9 @@ import ReadFile from './ReadFile'
 
 function SidebarAutoDraw() {
   return (
-    <aside>
+    <aside style={{
+      width: '8vw'
+    }}>
       <Accordion defaultIndex={[0, 1]} allowToggle allowMultiple>
         <AccordionItem>
           <h2>
