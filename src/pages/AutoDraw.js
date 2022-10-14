@@ -95,7 +95,7 @@ function AutoDraw() {
                     source: input,
                     animated: true,
                     type: 'step',
-                    style: { stroke: 'black' },
+                    style: { stroke: 'white' },
                     markerEnd: {
                       type: MarkerType.ArrowClosed,
                     },
