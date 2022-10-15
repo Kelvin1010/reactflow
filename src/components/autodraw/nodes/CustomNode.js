@@ -3,7 +3,8 @@ import React, { memo } from 'react'
 import { Handle, useReactFlow } from 'react-flow-renderer';
 import { useRecoilValue } from 'recoil';
 import { file } from '../../../helper/autodraw/stateRecoil';
-import { CloseIcon } from '@chakra-ui/icons'
+import { CloseIcon } from '@chakra-ui/icons';
+import '../../../style/style.css';
 
 
 const customColorBackground = [
@@ -53,12 +54,25 @@ function CustomNode({data,isConnectable,id}) {
                 onConnect={(params) => console.log('handle Connect', params)}
             />
             <>
-                <Box color={'white'} bg={bg} maxW={'sm'} borderWidth='1px' borderRadius={'lg'}>
-                    <CloseIcon onClick={getNodeIdandDeleteNode}/>
-                    <Box p='6'>
-                    <p>{data.label}</p>
-                    <p>This is Input: {data.input}</p>
-                    <p>This is Output: {data.output}</p>
+                <Box color={'white'} bg={bg} maxW={'sm'} borderWidth='1px' borderRadius={'lg'} padding={'5px'}>
+                    <div 
+                        style={{
+                            display:'flex',
+                            justifyContent:'space-between',
+                            alignItems:'center',
+                            backgroundColor:'black',
+                            borderRadius:'3px',
+                            padding:'3px'
+                        }}
+                    >
+                        <p>{data.label}</p>
+                        <CloseIcon onClick={getNodeIdandDeleteNode}/>
+                    </div>
+                    <Box p='6' backgroundColor={'gray'} padding={'3px'} borderRadius={'3px'} marginTop={'10px'}>
+                    <p className='textContent-data'>This is Input: {data.input}</p>
+                    </Box>
+                    <Box p='6' backgroundColor={'gray'} padding={'3px'} borderRadius={'3px'} marginTop={'3px'}>
+                    <p className='textContent-data'>This is Output: {data.output}</p>
                     </Box>
                 </Box>
             </>
