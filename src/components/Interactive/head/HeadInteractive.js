@@ -6,12 +6,6 @@ import SearchProject from './SearchProject';
 function HeadInteractive() {
   return (
     <div className='headInteractive'>
-        <div className='headInteractive-left'>
-            <div className='create-new-project'>
-                <CreateNewFolder />
-                <p>New Project</p>
-            </div>
-        </div>
         <div className='headInteractive-middle'>
             <SearchProject />
         </div>

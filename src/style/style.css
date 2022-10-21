@@ -74,7 +74,7 @@
 .style-one-project{
     list-style: none;
     width: 200px;
-    height: 30px;
+    height: 50px;
     display:flex;
     justify-content: center;
     align-items: center;
@@ -82,25 +82,13 @@
     border-radius: 2px;
     color: blueviolet;
     cursor:pointer;
+    margin: 0 50px 0 50px;
 }
 .style-one-project:hover{
     color: orange;
     background-color: gray;
 }
-.create-new-project{
-    border: 1px solid orange;
-    border-radius: 5px;
-    display: flex;
-    margin: 0 auto;
-    color: orange;
-    width: 170px;
-    padding: 5px;
-}
-.create-new-project:hover{
-    color: white;
-    background-color: orange;
-    cursor: pointer;
-}
+
 .searchproject{
     margin: auto;
 }
@@ -108,7 +96,7 @@
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
-    width: 70%;
+    width: 100%;
 }
 .headInteractive-right-others{
     width: 80%;

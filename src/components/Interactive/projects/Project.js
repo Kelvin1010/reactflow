@@ -47,7 +47,9 @@ function Project() {
           <div
             className='style-one-project'
           >
-            <Folder />
+            <Folder style={{
+              fontSize:'40px'
+            }}/>
             <li>{item.name}</li>
           </div>
         ))}
