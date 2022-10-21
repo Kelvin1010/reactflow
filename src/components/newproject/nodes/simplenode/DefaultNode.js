@@ -14,10 +14,10 @@ function Sidebar({ onDragStart }) {
       </div>
     );
 }
-  
+
 export function DefaultNodeWrapper(props) {
     return (
-      <NodeContainer {...props} label="Default Node">
+      <NodeContainer {...props} label="Default Node" isLeftHandle>
         <DefaultNode />
       </NodeContainer>
     );

@@ -1,6 +1,9 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box } from '@chakra-ui/react'
 import React from 'react'
+import { CodeNodeWrapper } from './nodes/other/CodeNode';
 import { DefaultNodeWrapper } from './nodes/simplenode/DefaultNode';
+import { InputNodeWrapper } from './nodes/simplenode/InputNode';
+import { OutputNodeWrapper } from './nodes/simplenode/OutputNode';
 
 function SidebarNewProject() {
 
@@ -27,6 +30,21 @@ function SidebarNewProject() {
                 </h2>
                 <AccordionPanel>
                     <DefaultNodeWrapper.Sidebar onDragStart={onDragStart} />
+                    <InputNodeWrapper.Sidebar onDragStart={onDragStart} />
+                    <OutputNodeWrapper.Sidebar onDragStart={onDragStart} />
+                </AccordionPanel>
+            </AccordionItem>
+            <AccordionItem border="none">
+                <h2>
+                    <AccordionButton>
+                    <Box flex="1" textAlign="left">
+                        Code Node
+                    </Box>
+                    <AccordionIcon />
+                    </AccordionButton>
+                </h2>
+                <AccordionPanel>
+                    <CodeNodeWrapper.Sidebar onDragStart={onDragStart} />
                 </AccordionPanel>
             </AccordionItem>
             </Accordion>

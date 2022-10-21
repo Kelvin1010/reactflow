@@ -7,10 +7,16 @@ import { atomState } from '../atom';
 import { Header } from '../components/header';
 import SidebarNewProject from '../components/newproject/SidebarNewProject';
 import { DefaultNodeWrapper } from '../components/newproject/nodes/simplenode/DefaultNode';
+import { InputNodeWrapper } from '../components/newproject/nodes/simplenode/InputNode';
+import { OutputNodeWrapper } from '../components/newproject/nodes/simplenode/OutputNode';
+import { CodeNodeWrapper } from '../components/newproject/nodes/other/CodeNode';
 
 
 const nodeTypes = {
     "default-node": DefaultNodeWrapper,
+    "input-node": InputNodeWrapper,
+    "output-node": OutputNodeWrapper,
+    "code-node": CodeNodeWrapper,
 };
   
 const rfStyle = {

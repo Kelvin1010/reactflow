@@ -114,6 +114,6 @@ export function NodeContainer({
   );
 }
 
-export const INPUT_TYPE_NODE = ["example-data", "file", "http", "paste"];
-export const TRANSFORM_TYPE_NODE = ["slice", "filter", "export","default-node"];
-export const OUTPUT_TYPE_NODE = ["group-chart"];
+export const INPUT_TYPE_NODE = ["input-node"];
+export const TRANSFORM_TYPE_NODE = ["default-node","code-node"];
+export const OUTPUT_TYPE_NODE = ["output-node"];
