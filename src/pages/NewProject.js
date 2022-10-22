@@ -10,6 +10,7 @@ import { DefaultNodeWrapper } from '../components/newproject/nodes/simplenode/De
 import { InputNodeWrapper } from '../components/newproject/nodes/simplenode/InputNode';
 import { OutputNodeWrapper } from '../components/newproject/nodes/simplenode/OutputNode';
 import { CodeNodeWrapper } from '../components/newproject/nodes/other/CodeNode';
+import InfoNode from '../components/newproject/InfoNode';
 
 
 const nodeTypes = {
@@ -25,7 +26,10 @@ const rfStyle = {
 
 
 const NewProject = () => {
-    const setValueAtom = useSetRecoilState(atomState);
+  const [isOpen, setIsOpen] = useState(false);
+  const [valueNode, setValueNode] = useState('');
+
+  const setValueAtom = useSetRecoilState(atomState);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const reactFlowWrapper = useRef(null);
@@ -71,6 +75,36 @@ const NewProject = () => {
     [reactFlowInstance, setNodes],
   );
 
+  //Click Node
+  const handleNodeClick = (e,node) => {
+    e.preventDefault();
+    setIsOpen(true)
+    setValueNode(node)
+    console.log(node)
+  }
+
+  //Update Node
+  const handleUpdate = (e,id) => {
+      setNodes((nds) => 
+          nds.map((node) => {
+              if(node.id === id) {
+                  node.data = {
+                      ...node.data, 
+                      label: e.namenode, 
+                      input: e?.input, 
+                      output: e?.output
+                  }
+              }
+              return node
+          })
+      )
+  }
+
+  //Close
+  const handleClose = () => {
+      setIsOpen(false)
+  }
+
 
   return (
     <Box height="100%">
@@ -87,6 +121,7 @@ const NewProject = () => {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            onNodeClick={handleNodeClick}
             fitView
             nodeTypes={nodeTypes}
             style={rfStyle}
@@ -95,6 +130,7 @@ const NewProject = () => {
             <Background />
           </ReactFlow>
         </div>
+        {isOpen && <InfoNode data={valueNode} updatefn={handleUpdate} closefn={handleClose}/>}
       </div>
     </Box>
   )
