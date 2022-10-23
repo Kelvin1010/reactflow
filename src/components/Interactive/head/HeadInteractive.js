@@ -9,11 +9,6 @@ function HeadInteractive() {
         <div className='headInteractive-middle'>
             <SearchProject />
         </div>
-        <div className='headInteractive-right'>
-            <div className='headInteractive-right-others'>
-                Others
-            </div>
-        </div>
     </div>
   )
 }

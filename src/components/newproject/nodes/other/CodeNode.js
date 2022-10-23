@@ -11,9 +11,8 @@ function CodeNode({onCallback, id, isConnectable}) {
   const [languageCodes, setLanguageCode] = useState('');
   const [data,setData] = useRecoilState(contentNewProject);
 
-  setData(`function test(){
-    String name = "Daya"
-  }`)
+  console.log(data)
+  setData(data)
     return (
         <div>
           <div 

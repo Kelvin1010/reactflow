@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { nanoid } from "nanoid";
 import ReactFlow, { addEdge, Background, Controls, MiniMap, Position, useEdgesState, useNodesState } from 'react-flow-renderer';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { atomState } from '../atom';
 import { Header } from '../components/header';
 import SidebarNewProject from '../components/newproject/SidebarNewProject';
@@ -11,6 +11,7 @@ import { InputNodeWrapper } from '../components/newproject/nodes/simplenode/Inpu
 import { OutputNodeWrapper } from '../components/newproject/nodes/simplenode/OutputNode';
 import { CodeNodeWrapper } from '../components/newproject/nodes/other/CodeNode';
 import InfoNode from '../components/newproject/InfoNode';
+import { contentDataNewProject } from '../helper/newproject/stateRecoil';
 
 
 const nodeTypes = {
@@ -28,6 +29,7 @@ const rfStyle = {
 const NewProject = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [valueNode, setValueNode] = useState('');
+  const contentData = useRecoilState(contentDataNewProject)
 
   const setValueAtom = useSetRecoilState(atomState);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -90,10 +92,9 @@ const NewProject = () => {
               if(node.id === id) {
                   node.data = {
                       ...node.data, 
-                      label: e.namenode, 
-                      input: e?.input, 
-                      output: e?.output
+                      content: contentData[0]
                   }
+                  console.log(node.data)
               }
               return node
           })

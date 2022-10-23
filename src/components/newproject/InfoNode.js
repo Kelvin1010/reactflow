@@ -7,22 +7,19 @@ function InfoNode({data, updatefn, closefn}) {
 
     const contentData = useRecoilState(contentDataNewProject)
 
-    console.log(contentData)
-
     const [values, setValues] = useState({
-        namenode: 'one',
-        input: 'two',
-        output: 'three'
+        content: contentData[0],
     })
 
-    // useEffect(() => {
-    //     const initialValues = {
-    //         namenode: data?.data?.label,
-    //         input: data?.data?.input,
-    //         output: data?.data?.output
-    //     }
-    //     setValues(initialValues)
-    // },[data])
+    console.log(data?.data)
+
+
+    useEffect(() => {
+        const initialValues = {
+            content: data?.data?.content,
+        }
+        setValues(initialValues)
+    },[data])
 
     const handleChange = (e) => {
         const {name,value} = e.target;
@@ -36,17 +33,13 @@ function InfoNode({data, updatefn, closefn}) {
 
     return (
         <div className='infonode'>
-            <div className='infonode-value'>
+            {/* <div className='infonode-value'>
                 <span>Name Node:</span>
                 <input onChange={handleChange} className={'infonode-text'} name='namenode' type={'text'} value={values.namenode} />
-            </div>
+            </div> */}
             <div className='infonode-value'>
-                <span>Input Node:</span>
-                <textarea onChange={handleChange} rows={5} className={'infonode-text'} name='input' type={'text'} value={values.input} />
-            </div>
-            <div className='infonode-value'>
-                <span>Out Node:</span>
-                <textarea onChange={handleChange} rows={5} className={'infonode-text'} name='output' type={'text'} value={values.output} />
+                <span>Content Node:</span>
+                <textarea onChange={handleChange} rows={5} className={'infonode-text'} name='input' type={'text'} value={values?.content} />
             </div>
             <div>
                 <div className='infonode-button'>
