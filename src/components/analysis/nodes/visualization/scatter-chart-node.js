@@ -97,7 +97,7 @@ function ScatterChartNode({ onCallback, id }) {
                 {
                   label: "dataset",
                   data: output,
-                  backgroundColor: "rgba(255, 99, 132, 1)",
+                  backgroundColor: "red",
                 },
               ],
             }}

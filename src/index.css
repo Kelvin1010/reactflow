@@ -63,7 +63,7 @@ body,
   z-index: 2;
   border-radius: unset;
   border: none;
-  background-color: #9f7aea;
+  background-color: blue;
 }
 
 .dndflow .react-flow__node .react-flow__handle.react-flow__handle-right {

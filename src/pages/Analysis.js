@@ -24,6 +24,9 @@ import {
   GroupChartWrapper,
 } from "../components/analysis/nodes";
 import { Box } from "@chakra-ui/react";
+import { CodeNodeWrapper } from "../components/analysis/nodes/simplenode/CodeNode";
+import { TextNodeWrapper } from "../components/analysis/nodes/simplenode/TextNode";
+import { ImageNodeWrapper } from "../components/analysis/nodes/simplenode/ImageNode";
 
 const nodeTypes = {
   "example-data": ExampleDataWrapped,
@@ -42,6 +45,9 @@ const nodeTypes = {
   stats: StatsWrapper,
   "group-chart": GroupChartWrapper,
   "line-chart": LineChartWrapper,
+  "code-node": CodeNodeWrapper,
+  "text-node": TextNodeWrapper,
+  "image-node": ImageNodeWrapper
 };
 
 const rfStyle = {

@@ -100,7 +100,7 @@ function BarChartNode({ onCallback, id }) {
                   label: "dataset",
                   data: output.map((i) => i.y),
                   borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                  backgroundColor: "red",
                 },
               ],
             }}

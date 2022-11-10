@@ -17,6 +17,9 @@ import {
   LineChartWrapper,
   GroupChartWrapper,
 } from "./nodes";
+import { CodeNodeWrapper } from "./nodes/simplenode/CodeNode";
+import { ImageNodeWrapper } from "./nodes/simplenode/ImageNode";
+import { TextNodeWrapper } from "./nodes/simplenode/TextNode";
 
 export function SidebarAnalysis() {
   const onDragStart = (event, nodeType) => {
@@ -27,6 +30,21 @@ export function SidebarAnalysis() {
   return (
     <aside>
       <Accordion defaultIndex={[0, 1, 2]} allowToggle allowMultiple>
+      <AccordionItem border="none">
+          <h2>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
+                Simple Node
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel>
+            <CodeNodeWrapper.Sidebar onDragStart={onDragStart} />
+            <TextNodeWrapper.Sidebar onDragStart={onDragStart} />
+            <ImageNodeWrapper.Sidebar onDragStart={onDragStart}/>
+          </AccordionPanel>
+        </AccordionItem>
         <AccordionItem border="none">
           <h2>
             <AccordionButton>

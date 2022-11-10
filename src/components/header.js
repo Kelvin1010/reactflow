@@ -15,7 +15,7 @@ export function Header() {
         <Image src="/logo.png" height="70px" />
       </Link>
       <Text fontSize="3xl" fontWeight="bold" color={'white'}>
-        Nền tảng phân tích dữ liệu
+        Data Analysis 
       </Text>
       <Button onClick={handleLogout} variant="outline" colorScheme="red">
         Đăng xuất

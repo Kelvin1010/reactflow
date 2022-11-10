@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Analytics, MenuOpen, FileOpen, CreateNewFolder } from '@mui/icons-material';
+import { Analytics, MenuOpen, FileOpen } from '@mui/icons-material';
 import '../../App.css';
 import { Link } from 'react-router-dom';
 
@@ -8,11 +8,6 @@ function Sidebar({children}) {
   const[isOpen ,setIsOpen] = useState(false);
   const toggle = () => setIsOpen (!isOpen);
   const menuItem=[
-    {
-        path:"/newproject",
-        name:"New Project",
-        icon:<CreateNewFolder/>
-    },
     {
           path:"/analysis",
           name:"Analysis Data",
