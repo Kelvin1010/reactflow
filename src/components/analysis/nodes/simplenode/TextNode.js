@@ -1,9 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NodeContainer } from '../../node-container';
+import { Editor, EditorState } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function TextNode() {
+
+  const [editorState, setEditorState] = useState('');
+
   return (
-    <div>TextNode</div>
+    <div>
+      <Editor
+        editorState={editorState}
+        toolbarClassName="toolbarClassName"
+        wrapperClassName="wrapperClassName"
+        editorClassName="editorClassName"
+        onEditorStateChange={setEditorState}
+      />;
+    </div>
   )
 }
 
@@ -20,7 +33,7 @@ function Sidebar({ onDragStart }) {
   
 export function TextNodeWrapper(props) {
     return (
-        <NodeContainer {...props} label="Text Node" isLeftHandle>
+        <NodeContainer {...props} label="Text Node" isLeftHandle className="chart-container text-editor">
           <TextNode />
         </NodeContainer>
     );

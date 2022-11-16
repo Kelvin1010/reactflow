@@ -6,7 +6,7 @@ function SearchProject() {
 
   const [query, setQuery] = useState("");
 
-  const keys = ["name"];
+  const keys = ["name","description"];
 
   const search = (data) => {
     return data?.filter((item) =>

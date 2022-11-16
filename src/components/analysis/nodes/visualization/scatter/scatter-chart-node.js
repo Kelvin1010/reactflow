@@ -4,8 +4,8 @@ import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
 import { Chart as ChartJS, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import { useRecoilValue } from "recoil";
-import { NodeContainer } from "../../node-container";
-import { atomState } from "../../../../atom";
+import { NodeContainer } from "../../../node-container";
+import { atomState } from "../../../../../atom";
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 

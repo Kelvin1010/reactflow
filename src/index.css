@@ -96,8 +96,8 @@ body,
   }
 
   .dndflow aside {
-    width: 20%;
-    max-width: 250px;
+    width: 29%;
+    max-width: 280px;
   }
 }
 
@@ -112,8 +112,13 @@ body,
 }
 
 .chart-container {
-  width: 550px;
+  width: 850px;
 }
+
+.text-editor{
+  height: 600px;
+}
+
 .inputhttp {
   width: 100%;
   border: 1px solid;
@@ -175,4 +180,8 @@ body,
 
 .react-flow__attribution {
   display: none !important;
+}
+
+.input-qmk{
+  cursor: pointer;
 }

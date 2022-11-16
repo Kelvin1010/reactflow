@@ -3,6 +3,11 @@ import { useEffect, useState } from "react";
 import { NodeContainer } from "../../node-container";
 import countries_indicators from "../../../../data/countries_indicators.json";
 import ufo_signhtings from "../../../../data/ufo-signhtings.json";
+import continents from '../../../../data/continents.json';
+import gdp from '../../../../data/gdp.json';
+import city from '../../../../data/city.json';
+import city2 from '../../../../data/city2.json';
+import databubble from '../../../../data/data-bubble.json';
 
 function ExampleData({ onCallback, data }) {
   const [option, setOption] = useState("");
@@ -26,7 +31,12 @@ function ExampleData({ onCallback, data }) {
   return (
     <Select value={option} onChange={handleChange}>
       <option value="countries_indicators">Countries Indicator</option>
+      <option value="data-bubble">Data Bubble</option>
+      <option value="city">Citys</option>
+      <option value="city2">2 City</option>
       <option value="ufo_signhtings">UFO Sightings</option>
+      <option value="continents">Continents</option>
+      <option value="gdp">GDP</option>
     </Select>
   );
 }
@@ -37,6 +47,16 @@ async function fakeApi(option) {
       return countries_indicators;
     case "ufo_signhtings":
       return ufo_signhtings;
+    case "continents":
+      return continents;
+    case "gdp":
+      return gdp;
+    case "city":
+      return city;
+    case "city2":
+      return city2;
+    case "data-bubble":
+      return databubble
     default:
       return [];
   }

@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Analysis from './pages/Analysis';
 import AutoDraw from './pages/AutoDraw';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path='/' element={<Home />}/>
             <Route path='/analysis' element={ <Analysis /> } />
             <Route path='/openfile' element={ <AutoDraw /> } />
+            <Route path='/forgotpassword' element={<ForgotPassword />} />
           </Routes>
         </>
       </BrowserRouter>

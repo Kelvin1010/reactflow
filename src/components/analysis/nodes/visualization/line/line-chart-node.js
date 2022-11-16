@@ -13,8 +13,8 @@ import {
 import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
-import { NodeContainer } from "../../node-container";
-import { atomState } from "../../../../atom";
+import { NodeContainer } from "../../../node-container";
+import { atomState } from "../../../../../atom";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 

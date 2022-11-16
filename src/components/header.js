@@ -12,13 +12,13 @@ export function Header() {
   return (
     <Flex height="60px" px="50px" justify="space-between" alignItems="center" backgroundImage={'.//sumo-landing-bg.png'}>
       <Link to={'/'}>
-        <Image src="/logo.png" height="70px" />
+        <Image src="./logo.png" height="70px" />
       </Link>
       <Text fontSize="3xl" fontWeight="bold" color={'white'}>
         Data Analysis 
       </Text>
       <Button onClick={handleLogout} variant="outline" colorScheme="red">
-        Đăng xuất
+        Log Out
       </Button>
     </Flex>
   );

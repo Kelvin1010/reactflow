@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import { ReactFlowProvider } from "react-flow-renderer";
 import { RecoilRoot } from "recoil";
 import { ChakraProvider } from "@chakra-ui/react";
+import 'antd/dist/antd.css';
 
 import App from "./App";
 import { AuthProvider } from "./components/auth-container";

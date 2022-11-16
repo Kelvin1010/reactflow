@@ -8,6 +8,8 @@ import { NodeContainer } from '../../node-container';
 
 function CodeNode({onCallback, id, isConnectable, ...props}) {
 
+  const dt = `const t = j;`
+
   const [languageCodes, setLanguageCode] = useState('');
   const [content, setContent] = useState(props.content)
 
@@ -35,12 +37,13 @@ function CodeNode({onCallback, id, isConnectable, ...props}) {
   }, [props.language, content]);
 
     return (
-        <div>
+        <div
+        >
           <div 
             style={{
               display:'flex',
               justifyContent:'space-between',
-              alignItems:'center'
+              alignItems:'center',
             }}
           >
             <p>Write your code</p>
@@ -58,7 +61,7 @@ function CodeNode({onCallback, id, isConnectable, ...props}) {
               onChange={(evt) => setContent(evt.target.value)}
               value={content}
             />
-            <pre className="code-output">
+            {/* <pre className="code-output">
               <SyntaxHighlighter
                 wrapLines={true}
                 showInlineLineNumbers={true}
@@ -66,9 +69,9 @@ function CodeNode({onCallback, id, isConnectable, ...props}) {
                 style={docco}
                 className={`language-${props.language}`}
               >
-                {content}
+                {dt}
               </SyntaxHighlighter>
-            </pre>
+            </pre> */}
           </div>
         </div>
     )
@@ -84,7 +87,7 @@ function Sidebar({ onDragStart }) {
 
 export function CodeNodeWrapper(props) {
     return (
-      <NodeContainer {...props} label="Code Node" isLeftHandle>
+      <NodeContainer {...props} label="Code Node" isLeftHandle className="chart-container">
         <CodeNode />
       </NodeContainer>
     );

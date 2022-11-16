@@ -1,7 +1,9 @@
 import { Box, Button, FormControl, FormErrorMessage, Input, Stack, Text, useToast } from "@chakra-ui/react";
 import isEqual from "lodash/isEqual";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { useAuth } from "../components/auth-container";
+import '../index.css'
 
 const initialState = {
   username: "admin@aiacademy.edu.vn",
@@ -56,7 +58,7 @@ export function Login() {
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack p="4" backgroundColor="white" rounded="md" boxShadow="sm" spacing="4">
-            <img src={"/logo.png"} className="App-logo" alt="logo" />
+            <img src={"./img/logo.png"} className="App-logo" alt="logo"/>
             <FormControl isInvalid={errors.username}>
               <Input
                 id="username"
@@ -83,9 +85,11 @@ export function Login() {
               />
               <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
             </FormControl>
-            <Box textAlign="right">
-              <Text color="teal">Quên mật khẩu?</Text>
-            </Box>
+            {/* <Link to={'/forgotpassowrd'}> */}
+              <Box textAlign="right">
+                <Text color="teal"  className='input-qmk'>Quên mật khẩu?</Text>
+              </Box>
+            {/* </Link> */}
             <Button type="submit" colorScheme="teal" isLoading={isSubmitting}>
               Đăng nhập
             </Button>

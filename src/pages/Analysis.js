@@ -18,7 +18,6 @@ import {
   PasteDataWrapper,
   ExportDataWrapper,
   HistogramChartWrapper,
-  BarChartWrapper,
   StatsWrapper,
   LineChartWrapper,
   GroupChartWrapper,
@@ -27,6 +26,22 @@ import { Box } from "@chakra-ui/react";
 import { CodeNodeWrapper } from "../components/analysis/nodes/simplenode/CodeNode";
 import { TextNodeWrapper } from "../components/analysis/nodes/simplenode/TextNode";
 import { ImageNodeWrapper } from "../components/analysis/nodes/simplenode/ImageNode";
+import { PieChartWrapper } from "../components/analysis/nodes/visualization/pie/pie-chart-node";
+import { BarChartWrapper } from "../components/analysis/nodes/visualization/column/bar-chart-node";
+import { AreaBasicChartWrapper } from "../components/analysis/nodes/visualization/area/area-chart-basic-node";
+import { ScatterPlotChartWrapper } from "../components/analysis/nodes/visualization/scatter/scatter-plot-chart-node";
+import { MultipleLinePlotAnimationWrapper } from "../components/analysis/nodes/visualization/line/multiple-line-plot-animation";
+import { StepLineChartWrapper } from "../components/analysis/nodes/visualization/line/step-line-chart";
+import { AreaStackedChartWrapper } from "../components/analysis/nodes/visualization/area/area-stacked-chart";
+import { ColumnBasicSliderChartWrapper } from "../components/analysis/nodes/visualization/column/column-basic-slider-chart";
+import { ColumnStackedChartWrapper } from "../components/analysis/nodes/visualization/column/column-stacked-chart";
+import { ColumnGroupChartWrapper } from "../components/analysis/nodes/visualization/column/column-group-chart";
+import { PercentColumnChartWrapper } from "../components/analysis/nodes/visualization/column/percent-column-chart";
+import { BarWrapper } from "../components/analysis/nodes/visualization/bar/bar-chart";
+import { BarStackedChartWrapper } from "../components/analysis/nodes/visualization/bar/bar-stacked-chart";
+import { BarGroupChartWrapper } from "../components/analysis/nodes/visualization/bar/bar-group-chart";
+import { PercentBarChartWrapper } from "../components/analysis/nodes/visualization/bar/percent-bar-chart";
+import { BubblePlotChartWrapper } from "../components/analysis/nodes/visualization/scatter/bubble-plot-chart";
 
 const nodeTypes = {
   "example-data": ExampleDataWrapped,
@@ -37,14 +52,29 @@ const nodeTypes = {
   slice: SliceWrapper,
   filter: FilterWrapper,
   "scatter-chart": ScatterChartWrapper,
+  "scatter-plot-chart": ScatterPlotChartWrapper,
+  "bubble-chart": BubblePlotChartWrapper,
+  "area-basic-chart": AreaBasicChartWrapper,
+  "area-stacked-chart": AreaStackedChartWrapper,
   "histogram-chart": HistogramChartWrapper,
   "bar-chart": BarChartWrapper,
+  "bar": BarWrapper,
+  "bar-stacked-chart": BarStackedChartWrapper,
+  "bar-group-chart": BarGroupChartWrapper,
+  "bar-percent-chart": PercentBarChartWrapper,
+  "column-group-chart": ColumnGroupChartWrapper,
+  "column-basic-slider-chart": ColumnBasicSliderChartWrapper,
+  "column-stacked-chart": ColumnStackedChartWrapper,
+  "percent-column-chart": PercentColumnChartWrapper,
+  "multiple-line-plot-animation-chart": MultipleLinePlotAnimationWrapper,
+  "step-line-chart": StepLineChartWrapper,
   merge: MergeWrapper,
   sort: SortWrapper,
   "group-node": GroupWrapper,
   stats: StatsWrapper,
   "group-chart": GroupChartWrapper,
   "line-chart": LineChartWrapper,
+  "pie-chart": PieChartWrapper,
   "code-node": CodeNodeWrapper,
   "text-node": TextNodeWrapper,
   "image-node": ImageNodeWrapper

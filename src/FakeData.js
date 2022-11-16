@@ -1,38 +1,22 @@
 export const listProject = [
-    {
-      name: 'Project 1'
-    },
-    {
-      name: 'Project 2'
-    },
-    {
-      name: 'Project 3'
-    },
-    {
-      name: 'Project 4'
-    },
-    {
-      name: 'Project 5'
-    },
-    {
-      name: 'Project 6'
-    },
-    {
-      name: 'Project 7'
-    },
-    {
-      name: 'Project 8'
-    },
-    {
-      name: 'Project 9'
-    },
-    {
-      name: 'Project 10'
-    },
-    {
-      name: 'Project 11'
-    },
-    {
-      name: 'Project 12'
-    },
-  ]
+{key: 0, name: 'Project 0', description: 'Description for project', time: '10/11/2022'},
+{key: 1, name: 'Project 1', description: 'Description for project', time: '10/11/2022'},
+{key: 2, name: 'Project 2', description: 'Description for project', time: '10/11/2022'},
+{key: 3, name: 'Project 3', description: 'Description for project', time: '10/11/2022'},
+{key: 4, name: 'Project 4', description: 'Description for project', time: '10/11/2022'},
+{key: 5, name: 'Project 5', description: 'Description for project', time: '10/11/2022'},
+{key: 6, name: 'Project 6', description: 'Description for project', time: '10/11/2022'},
+{key: 7, name: 'Project 7', description: 'Description for project', time: '10/11/2022'},
+{key: 8, name: 'Project 8', description: 'Description for project', time: '10/11/2022'},
+{key: 9, name: 'Project 9', description: 'Description for project', time: '10/11/2022'},
+{key: 10, name: 'Project 10', description: 'Description for project', time: '10/11/2022'},
+{key: 11, name: 'Project 11', description: 'Description for project', time: '10/11/2022'},
+{key: 12, name: 'Project 12', description: 'Description for project', time: '10/11/2022'},
+{key: 13, name: 'Project 13', description: 'Description for project', time: '10/11/2022'},
+{key: 14, name: 'Project 14', description: 'Description for project', time: '10/11/2022'},
+{key: 15, name: 'Project 15', description: 'Description for project', time: '10/11/2022'},
+{key: 16, name: 'Project 16', description: 'Description for project', time: '10/11/2022'},
+{key: 17, name: 'Project 17', description: 'Description for project', time: '10/11/2022'},
+{key: 18, name: 'Project 18', description: 'Description for project', time: '10/11/2022'},
+{key: 19, name: 'Project 19', description: 'Description for project', time: '10/11/2022'},
+]

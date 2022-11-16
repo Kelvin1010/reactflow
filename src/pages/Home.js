@@ -10,7 +10,7 @@ function Home() {
         <Header />
         <div className='interaction'>
           <Sidebar />
-          <Interactive />
+          {/* <Interactive /> */}
         </div>
     </>
   )
