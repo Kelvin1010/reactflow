@@ -15,7 +15,7 @@ export function Header() {
         <Image src="./logo.png" height="70px" />
       </Link>
       <Text fontSize="3xl" fontWeight="bold" color={'white'}>
-        Data Analysis 
+        Data Analytics 
       </Text>
       <Button onClick={handleLogout} variant="outline" colorScheme="red">
         Log Out

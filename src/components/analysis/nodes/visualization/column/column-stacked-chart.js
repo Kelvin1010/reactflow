@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
 import { Column } from '@ant-design/plots';
 import { each, groupBy } from '@antv/util';
+import Move3ColumnsOfData from '../../../data-transfer/move-3-columns-of-data';
 
 
 const options = {
@@ -39,7 +40,7 @@ function ColumnStackedChart({ onCallback, id }) {
             yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
             zColumn: columnsParent.includes(input.zColumn) ? input.zColumn : columnsParent[0],
         };
-        var output = columnStackedChartTransform(atomParent.data.output, initialInput);
+        var output = Move3ColumnsOfData(atomParent.data.output, initialInput);
         setInput(initialInput);
         setOutput(output);
         onCallback({ output: atomParent.data.output, input: initialInput });
@@ -55,7 +56,7 @@ function ColumnStackedChart({ onCallback, id }) {
 
     function handleChangeInput(event) {
         var { value, name } = event.target;
-        var output = columnStackedChartTransform(atomParent.data.output, { ...input, [name]: value });
+        var output = Move3ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
         setInput({ ...input, [name]: value });
         setOutput(output);
         onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
@@ -153,14 +154,6 @@ function ColumnStackedChart({ onCallback, id }) {
 
 export default ColumnStackedChart
 
-
-function columnStackedChartTransform(input, { xColumn, yColumn, zColumn }) {
-    if (!Array.isArray(input)) {
-      return [];
-    }
-  
-    return input?.map((i) => ({ x: i[xColumn], y: i[yColumn], z: i[zColumn] }));
-}
   
 function Sidebar({ onDragStart }) {
     return (

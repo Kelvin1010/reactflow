@@ -4,9 +4,8 @@ import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
 import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
-import { Bar } from '@ant-design/plots';
+import { Column, Heatmap } from '@ant-design/plots';
 import Move3ColumnsOfData from '../../../data-transfer/move-3-columns-of-data';
-
 
 const options = {
     reponsive: true,
@@ -18,8 +17,7 @@ const initialState = {
     zColumn: "",
 };
 
-
-function PercentBarChart({ onCallback, id }) {
+function HeatmapShapezieChart({ onCallback, id }) {
 
     const { getNode } = useReactFlow();
     const allNodes = useNodes();
@@ -39,7 +37,7 @@ function PercentBarChart({ onCallback, id }) {
             yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
             zColumn: columnsParent.includes(input.zColumn) ? input.zColumn : columnsParent[0],
         };
-        var output =  Move3ColumnsOfData(atomParent.data.output, initialInput);
+        var output = Move3ColumnsOfData(atomParent.data.output, initialInput);
         setInput(initialInput);
         setOutput(output);
         onCallback({ output: atomParent.data.output, input: initialInput });
@@ -55,7 +53,7 @@ function PercentBarChart({ onCallback, id }) {
 
     function handleChangeInput(event) {
         var { value, name } = event.target;
-        var output =  Move3ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
+        var output = Move3ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
         setInput({ ...input, [name]: value });
         setOutput(output);
         onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
@@ -67,18 +65,15 @@ function PercentBarChart({ onCallback, id }) {
         data,
         xField: 'x',
         yField: 'y',
-        seriesField: 'z',
-        isPercent: true,
-        isStack: true,
-    
-        // color: ['#2582a1', '#f88c24', '#c52125', '#87f4d0'],
+        colorField: 'z',
+        sizeField: 'z',
+        shape: 'square',
+        color: ['#dddddd', '#9ec8e0', '#5fa4cd', '#2e7ab6', '#114d90'],
         label: {
-          position: 'middle',
-          content: (item) => {
-            return `${item.x.toFixed(2)} %`;
-          },
           style: {
             fill: '#fff',
+            shadowBlur: 2,
+            shadowColor: 'rgba(0, 0, 0, .45)',
           },
         },
     };
@@ -121,30 +116,30 @@ function PercentBarChart({ onCallback, id }) {
                     ))}
                     </Select>
                 </FormControl>
-                <Bar {...config} />
+                <Heatmap {...config} />
                 </Stack>
             )}
         </Box>
     )
 }
 
-export default PercentBarChart
+export default HeatmapShapezieChart
 
-  
+
 function Sidebar({ onDragStart }) {
     return (
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, "bar-percent-chart")} draggable>
-        Biểu đồ cột ngang %
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, "heatmap-shapesize-chart")} draggable>
+        Biểu đồ Heatmap ShapeSize 
       </div>
     );
 }
   
-export function PercentBarChartWrapper(props) {
+export function HeatmapShapezieChartWrapper(props) {
     return (
-      <NodeContainer {...props} label="Biểu đồ cột ngang phần trăm" isLeftHandle className="chart-container">
-        <PercentBarChart />
+      <NodeContainer {...props} label="Biểu đồ Heatmap ShapeSize" isLeftHandle className="chart-container">
+        <HeatmapShapezieChart />
       </NodeContainer>
     );
 }
-  
-PercentBarChartWrapper.Sidebar = Sidebar;
+
+HeatmapShapezieChartWrapper.Sidebar = Sidebar;

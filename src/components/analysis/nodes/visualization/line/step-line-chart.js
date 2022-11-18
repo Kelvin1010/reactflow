@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
 import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { Line } from '@ant-design/plots';
+import Move3ColumnsOfData from '../../../data-transfer/move-3-columns-of-data';
 
 
 const options = {
@@ -38,7 +39,7 @@ function StepLineChart({ onCallback, id }) {
             yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
             zColumn: columnsParent.includes(input.zColumn) ? input.zColumn : columnsParent[0],
         };
-        var output = stepLineChartTransform(atomParent.data.output, initialInput);
+        var output = Move3ColumnsOfData(atomParent.data.output, initialInput);
         setInput(initialInput);
         setOutput(output);
         onCallback({ output: atomParent.data.output, input: initialInput });
@@ -54,7 +55,7 @@ function StepLineChart({ onCallback, id }) {
 
     function handleChangeInput(event) {
         var { value, name } = event.target;
-        var output = stepLineChartTransform(atomParent.data.output, { ...input, [name]: value });
+        var output = Move3ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
         setInput({ ...input, [name]: value });
         setOutput(output);
         onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
@@ -120,14 +121,6 @@ function StepLineChart({ onCallback, id }) {
 
 export default StepLineChart
 
-
-function stepLineChartTransform(input, { xColumn, yColumn, zColumn }) {
-    if (!Array.isArray(input)) {
-      return [];
-    }
-  
-    return input?.map((i) => ({ x: i[xColumn], y: i[yColumn], z: i[zColumn] }));
-}
 
 function Sidebar({ onDragStart }) {
     return (

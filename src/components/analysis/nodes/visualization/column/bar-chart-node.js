@@ -6,6 +6,7 @@ import { Chart as ChartJS, LinearScale, Tooltip, Legend, CategoryScale, BarEleme
 import { useRecoilValue } from "recoil";
 import { NodeContainer } from "../../../node-container";
 import { atomState } from "../../../../../atom";
+import Move2ColumnsOfData from "../../../data-transfer/move-2-columns-of-data";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -40,7 +41,7 @@ function BarChartNode({ onCallback, id }) {
         xColumn: columnsParent.includes(input.xColumn) ? input.xColumn : columnsParent[0],
         yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
       };
-      var output = barChartTransform(atomParent.data.output, initialInput);
+      var output = Move2ColumnsOfData(atomParent.data.output, initialInput);
       setInput(initialInput);
       setOutput(output);
       onCallback({ output: atomParent.data.output, input: initialInput });
@@ -56,7 +57,7 @@ function BarChartNode({ onCallback, id }) {
 
   function handleChangeInput(event) {
     var { value, name } = event.target;
-    var output = barChartTransform(atomParent.data.output, { ...input, [name]: value });
+    var output = Move2ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
     setInput({ ...input, [name]: value });
     setOutput(output);
     onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
@@ -111,13 +112,6 @@ function BarChartNode({ onCallback, id }) {
   );
 }
 
-function barChartTransform(input, { xColumn, yColumn }) {
-  if (!Array.isArray(input)) {
-    return [];
-  }
-
-  return input?.map((i) => ({ x: i[xColumn], y: i[yColumn] }));
-}
 
 function Sidebar({ onDragStart }) {
   return (

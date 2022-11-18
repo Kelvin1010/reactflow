@@ -20,7 +20,7 @@ import { CodeNodeWrapper } from "./nodes/simplenode/CodeNode";
 import { ImageNodeWrapper } from "./nodes/simplenode/ImageNode";
 import { TextNodeWrapper } from "./nodes/simplenode/TextNode";
 import PieChartNode, { PieChartWrapper } from "./nodes/visualization/pie/pie-chart-node";
-import { AreaChartOutlined, BarChartOutlined, DotChartOutlined, LineChartOutlined, PieChartOutlined } from '@ant-design/icons';
+import { AreaChartOutlined, BarChartOutlined, DotChartOutlined, LineChartOutlined, PieChartOutlined, BorderInnerOutlined } from '@ant-design/icons';
 import { BarChartWrapper } from "./nodes/visualization/column/bar-chart-node";
 import { AreaBasicChartWrapper } from "./nodes/visualization/area/area-chart-basic-node";
 import ScatterPlotChartNode, { ScatterPlotChartWrapper } from "./nodes/visualization/scatter/scatter-plot-chart-node";
@@ -35,6 +35,9 @@ import { BarWrapper } from "./nodes/visualization/bar/bar-chart";
 import { BarStackedChartWrapper } from "./nodes/visualization/bar/bar-stacked-chart";
 import { BarGroupChartWrapper } from "./nodes/visualization/bar/bar-group-chart";
 import { PercentBarChartWrapper } from "./nodes/visualization/bar/percent-bar-chart";
+import { BubblePlotChartWrapper } from "./nodes/visualization/scatter/bubble-plot-chart";
+import { Bubble3dChartWrapper } from "./nodes/visualization/scatter/bubble-3d-chart";
+import { HeatmapShapezieChartWrapper } from "./nodes/visualization/heatmap/heatmap-shapesize-chart";
 
 export function SidebarAnalysis() {
   const onDragStart = (event, nodeType) => {
@@ -212,9 +215,36 @@ export function SidebarAnalysis() {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel>
-                  hh
+                  <BubblePlotChartWrapper.Sidebar onDragStart={onDragStart} />
+                  <Bubble3dChartWrapper.Sidebar onDragStart={onDragStart} />
                 </AccordionPanel>
               </AccordionItem>
+              </AccordionPanel>
+            </AccordionItem>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left">
+                    <BorderInnerOutlined /> Heatmap
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel>
+                <HeatmapShapezieChartWrapper.Sidebar onDragStart={onDragStart} />
+              </AccordionPanel>
+            </AccordionItem>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left">
+                    <BorderInnerOutlined /> Radar
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel>
+                hhhh
               </AccordionPanel>
             </AccordionItem>
             <AccordionItem>

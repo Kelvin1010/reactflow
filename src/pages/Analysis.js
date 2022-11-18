@@ -42,6 +42,8 @@ import { BarStackedChartWrapper } from "../components/analysis/nodes/visualizati
 import { BarGroupChartWrapper } from "../components/analysis/nodes/visualization/bar/bar-group-chart";
 import { PercentBarChartWrapper } from "../components/analysis/nodes/visualization/bar/percent-bar-chart";
 import { BubblePlotChartWrapper } from "../components/analysis/nodes/visualization/scatter/bubble-plot-chart";
+import { Bubble3dChartWrapper } from "../components/analysis/nodes/visualization/scatter/bubble-3d-chart";
+import { HeatmapShapezieChartWrapper } from "../components/analysis/nodes/visualization/heatmap/heatmap-shapesize-chart";
 
 const nodeTypes = {
   "example-data": ExampleDataWrapped,
@@ -54,6 +56,7 @@ const nodeTypes = {
   "scatter-chart": ScatterChartWrapper,
   "scatter-plot-chart": ScatterPlotChartWrapper,
   "bubble-chart": BubblePlotChartWrapper,
+  "bubble-3d-chart": Bubble3dChartWrapper,
   "area-basic-chart": AreaBasicChartWrapper,
   "area-stacked-chart": AreaStackedChartWrapper,
   "histogram-chart": HistogramChartWrapper,
@@ -68,6 +71,7 @@ const nodeTypes = {
   "percent-column-chart": PercentColumnChartWrapper,
   "multiple-line-plot-animation-chart": MultipleLinePlotAnimationWrapper,
   "step-line-chart": StepLineChartWrapper,
+  "heatmap-shapesize-chart": HeatmapShapezieChartWrapper,
   merge: MergeWrapper,
   sort: SortWrapper,
   "group-node": GroupWrapper,

@@ -1,3 +1,4 @@
+import { Image } from '@chakra-ui/react';
 import React from 'react'
 import { Header } from '../components/header'
 import Interactive from '../components/Interactive/Interactive'
@@ -11,6 +12,7 @@ function Home() {
         <div className='interaction'>
           <Sidebar />
           {/* <Interactive /> */}
+          <Image src='./logo-data-analysis-1.jpg' height={'92vh'} width={'100vw'} />
         </div>
     </>
   )

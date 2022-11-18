@@ -5,6 +5,7 @@ import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-render
 import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
 import { Bar, Column } from '@ant-design/plots';
+import Move3ColumnsOfData from '../../../data-transfer/move-3-columns-of-data';
 
 
 const options = {
@@ -38,7 +39,7 @@ function BarGroupChart({ onCallback, id }) {
             yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
             zColumn: columnsParent.includes(input.zColumn) ? input.zColumn : columnsParent[0],
         };
-        var output =  barGroupChartTransform(atomParent.data.output, initialInput);
+        var output =  Move3ColumnsOfData(atomParent.data.output, initialInput);
         setInput(initialInput);
         setOutput(output);
         onCallback({ output: atomParent.data.output, input: initialInput });
@@ -54,7 +55,7 @@ function BarGroupChart({ onCallback, id }) {
 
     function handleChangeInput(event) {
         var { value, name } = event.target;
-        var output =  barGroupChartTransform(atomParent.data.output, { ...input, [name]: value });
+        var output =  Move3ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
         setInput({ ...input, [name]: value });
         setOutput(output);
         onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
@@ -125,14 +126,6 @@ function BarGroupChart({ onCallback, id }) {
 }
 
 export default BarGroupChart
-
-function barGroupChartTransform(input, { xColumn, yColumn, zColumn }) {
-    if (!Array.isArray(input)) {
-      return [];
-    }
-  
-    return input?.map((i) => ({ x: i[xColumn], y: i[yColumn], z: i[zColumn] }));
-}
   
 function Sidebar({ onDragStart }) {
     return (

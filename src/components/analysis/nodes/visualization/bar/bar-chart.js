@@ -5,6 +5,7 @@ import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-render
 import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
 import { Bar } from '@ant-design/plots';
+import Move2ColumnsOfData from '../../../data-transfer/move-2-columns-of-data';
 
 
 const options = {
@@ -36,7 +37,7 @@ function BarChart({ onCallback, id }) {
             xColumn: columnsParent.includes(input.xColumn) ? input.xColumn : columnsParent[0],
             yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
         };
-        var output = barTransform(atomParent.data.output, initialInput);
+        var output = Move2ColumnsOfData(atomParent.data.output, initialInput);
         setInput(initialInput);
         setOutput(output);
         onCallback({ output: atomParent.data.output, input: initialInput });
@@ -52,7 +53,7 @@ function BarChart({ onCallback, id }) {
 
     function handleChangeInput(event) {
         var { value, name } = event.target;
-        var output = barTransform(atomParent.data.output, { ...input, [name]: value });
+        var output = Move2ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
         setInput({ ...input, [name]: value });
         setOutput(output);
         onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
@@ -107,14 +108,6 @@ function BarChart({ onCallback, id }) {
 
 export default BarChart
 
-
-function barTransform(input, { xColumn, yColumn }) {
-    if (!Array.isArray(input)) {
-      return [];
-    }
-  
-    return input?.map((i) => ({ x: i[xColumn], y: i[yColumn] }));
-}
   
 function Sidebar({ onDragStart }) {
     return (

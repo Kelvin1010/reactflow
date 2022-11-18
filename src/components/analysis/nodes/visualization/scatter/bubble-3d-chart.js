@@ -4,8 +4,9 @@ import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
 import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
-import { Bar } from '@ant-design/plots';
-import Move3ColumnsOfData from '../../../data-transfer/move-3-columns-of-data';
+import { Scatter } from '@ant-design/plots';
+import Move4ColumnsOfData from '../../../data-transfer/move-4-columns-of-data';
+
 
 
 const options = {
@@ -16,10 +17,12 @@ const initialState = {
     xColumn: "",
     yColumn: "",
     zColumn: "",
+    kColumn: "",
 };
 
 
-function PercentBarChart({ onCallback, id }) {
+
+function Bubble3dChart({ onCallback, id }) {
 
     const { getNode } = useReactFlow();
     const allNodes = useNodes();
@@ -38,8 +41,9 @@ function PercentBarChart({ onCallback, id }) {
             xColumn: columnsParent.includes(input.xColumn) ? input.xColumn : columnsParent[0],
             yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
             zColumn: columnsParent.includes(input.zColumn) ? input.zColumn : columnsParent[0],
+            kColumn: columnsParent.includes(input.kColumn) ? input.kColumn : columnsParent[0],
         };
-        var output =  Move3ColumnsOfData(atomParent.data.output, initialInput);
+        var output =  Move4ColumnsOfData(atomParent.data.output, initialInput);
         setInput(initialInput);
         setOutput(output);
         onCallback({ output: atomParent.data.output, input: initialInput });
@@ -55,7 +59,7 @@ function PercentBarChart({ onCallback, id }) {
 
     function handleChangeInput(event) {
         var { value, name } = event.target;
-        var output =  Move3ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
+        var output =  Move4ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
         setInput({ ...input, [name]: value });
         setOutput(output);
         onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
@@ -64,21 +68,35 @@ function PercentBarChart({ onCallback, id }) {
     const data = output;
 
     const config = {
+        appendPadding: 30,
         data,
         xField: 'x',
         yField: 'y',
-        seriesField: 'z',
-        isPercent: true,
-        isStack: true,
-    
-        // color: ['#2582a1', '#f88c24', '#c52125', '#87f4d0'],
-        label: {
-          position: 'middle',
-          content: (item) => {
-            return `${item.x.toFixed(2)} %`;
+        colorField: 'z',
+        color: ['r(0.4, 0.3, 0.7) 0:rgba(255,255,255,0.5) 1:#5B8FF9', 'r(0.4, 0.4, 0.7) 0:rgba(255,255,255,0.5) 1:#61DDAA'],
+        sizeField: 'k',
+        size: [5, 20],
+        shape: 'circle',
+        yAxis: {
+          nice: true,
+          line: {
+            style: {
+              stroke: '#eee',
+            },
           },
-          style: {
-            fill: '#fff',
+        },
+        xAxis: {
+          grid: {
+            line: {
+              style: {
+                stroke: '#eee',
+              },
+            },
+          },
+          line: {
+            style: {
+              stroke: '#eee',
+            },
           },
         },
     };
@@ -121,30 +139,41 @@ function PercentBarChart({ onCallback, id }) {
                     ))}
                     </Select>
                 </FormControl>
-                <Bar {...config} />
+                <FormControl>
+                    <FormLabel>k-axis</FormLabel>
+                    <Select name="kColumn" value={input.kColumn} onChange={handleChangeInput}>
+                    {columns.map((value) => (
+                        <option key={value} value={value}>
+                        {value}
+                        </option>
+                    ))}
+                    </Select>
+                </FormControl>
+                <Scatter {...config} />
                 </Stack>
             )}
         </Box>
     )
 }
 
-export default PercentBarChart
+export default Bubble3dChart
 
-  
+
+
 function Sidebar({ onDragStart }) {
     return (
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, "bar-percent-chart")} draggable>
-        Biểu đồ cột ngang %
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, "bubble-3d-chart")} draggable>
+        Biểu đồ cột bubble 3D
       </div>
     );
 }
   
-export function PercentBarChartWrapper(props) {
+export function Bubble3dChartWrapper(props) {
     return (
-      <NodeContainer {...props} label="Biểu đồ cột ngang phần trăm" isLeftHandle className="chart-container">
-        <PercentBarChart />
+      <NodeContainer {...props} label="Biểu đồ bubble 3D" isLeftHandle className="chart-container">
+        <Bubble3dChart />
       </NodeContainer>
     );
 }
   
-PercentBarChartWrapper.Sidebar = Sidebar;
+Bubble3dChartWrapper.Sidebar = Sidebar;

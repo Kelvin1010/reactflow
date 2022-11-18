@@ -8,6 +8,8 @@ import gdp from '../../../../data/gdp.json';
 import city from '../../../../data/city.json';
 import city2 from '../../../../data/city2.json';
 import databubble from '../../../../data/data-bubble.json';
+import culinary from '../../../../data/culinary.json';
+import sex from '../../../../data/sex.json';
 
 function ExampleData({ onCallback, data }) {
   const [option, setOption] = useState("");
@@ -31,7 +33,9 @@ function ExampleData({ onCallback, data }) {
   return (
     <Select value={option} onChange={handleChange}>
       <option value="countries_indicators">Countries Indicator</option>
+      <option value="culinary">Culinary</option>
       <option value="data-bubble">Data Bubble</option>
+      <option value="sex">Sex</option>
       <option value="city">Citys</option>
       <option value="city2">2 City</option>
       <option value="ufo_signhtings">UFO Sightings</option>
@@ -57,6 +61,10 @@ async function fakeApi(option) {
       return city2;
     case "data-bubble":
       return databubble
+    case "culinary":
+      return culinary
+    case "sex":
+      return sex
     default:
       return [];
   }

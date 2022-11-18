@@ -5,6 +5,7 @@ import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-render
 import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
 import { Scatter } from '@ant-design/plots';
+import Move4ColumnsOfData from '../../../data-transfer/move-4-columns-of-data';
 
 
 const options = {
@@ -39,7 +40,7 @@ function BubblePlotChart({ onCallback, id }) {
             zColumn: columnsParent.includes(input.zColumn) ? input.zColumn : columnsParent[0],
             kColumn: columnsParent.includes(input.kColumn) ? input.kColumn : columnsParent[0],
         };
-        var output =  bubblePlotChartTransform(atomParent.data.output, initialInput);
+        var output =  Move4ColumnsOfData(atomParent.data.output, initialInput);
         setInput(initialInput);
         setOutput(output);
         onCallback({ output: atomParent.data.output, input: initialInput });
@@ -55,7 +56,7 @@ function BubblePlotChart({ onCallback, id }) {
 
     function handleChangeInput(event) {
         var { value, name } = event.target;
-        var output =  bubblePlotChartTransform(atomParent.data.output, { ...input, [name]: value });
+        var output =  Move4ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
         setInput({ ...input, [name]: value });
         setOutput(output);
         onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
@@ -64,20 +65,20 @@ function BubblePlotChart({ onCallback, id }) {
     const data = output;
 
     const processData = data.map((item) => {
-        item['Average annual wage'] = item['Average annual wage'] * 1;
-        item['probability'] = item['probability'] * 1;
-        item['numbEmployed'] = item['numbEmployed'] * 1;
+        item['y'] = item['y'] * 1;
+        item['x'] = item['x'] * 1;
+        item['z'] = item['z'] * 1;
         return item;
     });
     const labels = ['Airline Pilots, Copilots and Flight Engineers', 'Benefits Managers'];
     const config = {
         appendPadding: 30,
         data: processData,
-        xField: 'probability',
-        yField: 'Average annual wage',
-        colorField: 'education',
+        xField: 'x',
+        yField: 'y',
+        colorField: 'z',
         size: [2, 16],
-        sizeField: 'numbEmployed',
+        sizeField: 'k',
         shape: 'circle',
         yAxis: {
           nice: false,
@@ -103,7 +104,7 @@ function BubblePlotChart({ onCallback, id }) {
           },
         },
         tooltip: {
-          fields: ['probability', 'Average annual wage', 'numbEmployed'],
+          fields: ['x', 'y', 'z'],
         },
         legend: {
           position: 'top',
@@ -140,7 +141,7 @@ function BubblePlotChart({ onCallback, id }) {
           {
             type: 'text',
             position: ['1.03', 'max'],
-            content: 'Average annual wage',
+            content: 'y',
             style: {
               textAlign: 'right',
               fontWeight: '500',
@@ -227,14 +228,6 @@ function BubblePlotChart({ onCallback, id }) {
 
 export default BubblePlotChart
 
-
-function bubblePlotChartTransform(input, { xColumn, yColumn, zColumn, kColumn }) {
-    if (!Array.isArray(input)) {
-      return [];
-    }
-  
-    return input?.map((i) => ({ x: i[xColumn], y: i[yColumn], z: i[zColumn], k: i[kColumn] }));
-}
   
 function Sidebar({ onDragStart }) {
     return (
