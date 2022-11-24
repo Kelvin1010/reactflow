@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
 import { Column } from '@ant-design/plots';
 import { each, groupBy } from '@antv/util';
-import Move3ColumnsOfData from '../../../data-transfer/move-3-columns-of-data';
+import { Move3ColumnsOfData } from '../../../data-transfer/move-columns-of-data';
 
 
 const options = {

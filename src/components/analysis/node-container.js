@@ -5,6 +5,7 @@ import { DragHandleIcon } from "@chakra-ui/icons";
 import { getConnectedEdges, Handle, useReactFlow, useStoreApi } from "react-flow-renderer";
 import { useRecoilState } from "recoil";
 import { atomState } from "../../atom";
+import ModalNodes from "../modals/modal-nodes";
 
 export function NodeContainer({
   children,
@@ -14,6 +15,7 @@ export function NodeContainer({
   isLeftHandle = false,
   className = "node-container",
   type,
+  modal
 }) {
   const [atoms, setAtoms] = useRecoilState(atomState);
   const atom = atoms.find((a) => a.id === id)?.data;
@@ -96,6 +98,7 @@ export function NodeContainer({
             <DragHandleIcon mr="2" />
             <Text fontSize="xl">{label}</Text>
           </Box>
+          <ModalNodes data={atom} />
           <CloseButton onClick={handleDeleteNode} />
         </Stack>
         <Divider />

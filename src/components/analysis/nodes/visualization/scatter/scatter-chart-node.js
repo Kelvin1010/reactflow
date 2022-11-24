@@ -6,7 +6,7 @@ import { Chart as ChartJS, LinearScale, PointElement, LineElement, Tooltip, Lege
 import { useRecoilValue } from "recoil";
 import { NodeContainer } from "../../../node-container";
 import { atomState } from "../../../../../atom";
-import Move2ColumnsOfData from "../../../data-transfer/move-2-columns-of-data";
+import { Move2ColumnsOfData } from "../../../data-transfer/move-columns-of-data";
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 

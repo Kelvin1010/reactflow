@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
 import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { Line } from '@ant-design/plots';
-import Move3ColumnsOfData from '../../../data-transfer/move-3-columns-of-data';
+import { Move3ColumnsOfData } from '../../../data-transfer/move-columns-of-data';
 
 
 const options = {

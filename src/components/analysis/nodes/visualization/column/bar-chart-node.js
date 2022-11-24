@@ -6,7 +6,7 @@ import { Chart as ChartJS, LinearScale, Tooltip, Legend, CategoryScale, BarEleme
 import { useRecoilValue } from "recoil";
 import { NodeContainer } from "../../../node-container";
 import { atomState } from "../../../../../atom";
-import Move2ColumnsOfData from "../../../data-transfer/move-2-columns-of-data";
+import { Move2ColumnsOfData } from "../../../data-transfer/move-columns-of-data";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -62,7 +62,7 @@ function BarChartNode({ onCallback, id }) {
     setOutput(output);
     onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
   }
-  console.log(atomParent)
+
 
   return (
     <Box>

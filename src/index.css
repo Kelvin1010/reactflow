@@ -185,3 +185,11 @@ body,
 .input-qmk{
   cursor: pointer;
 }
+
+.img-bg{
+  background-image: url('../public/img/log-1.jpg');
+  height: 92vh;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { getIncomers, useEdges, useNodes, useReactFlow } from 'react-flow-renderer';
 import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
-import Move2ColumnsOfData from '../../../data-transfer/move-2-columns-of-data';
+import { Move2ColumnsOfData } from '../../../data-transfer/move-columns-of-data';
 import { NodeContainer } from '../../../node-container';
 
 

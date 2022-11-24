@@ -7,8 +7,8 @@ import {
   Route,
 } from "react-router-dom";
 import Analysis from './pages/Analysis';
-import AutoDraw from './pages/AutoDraw';
 import ForgotPassword from './pages/ForgotPassword';
+import Setting from './pages/Setting';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />}/>
             <Route path='/analysis' element={ <Analysis /> } />
-            <Route path='/openfile' element={ <AutoDraw /> } />
+            <Route path='/settings' element={ <Setting /> } />
             <Route path='/forgotpassword' element={<ForgotPassword />} />
           </Routes>
         </>

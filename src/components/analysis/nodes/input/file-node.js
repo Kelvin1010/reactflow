@@ -11,6 +11,13 @@ function FileData({ onCallback }) {
   function handleChangeInput(e) {
     var file = e.target.files[0];
     var reader = new FileReader();
+
+    if (file.name.split(".")[1] === "onnx") {
+      onCallback({ result: file });
+      setFile(file);
+      return;
+    }
+
     reader.addEventListener("loadend", () => {
       if (file.type === "application/json") {
         onCallback({ output: JSON.parse(reader.result) });

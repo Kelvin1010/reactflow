@@ -5,7 +5,7 @@ import { atomState } from '../../../../../atom';
 import { NodeContainer } from '../../../node-container';
 import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { Area } from '@ant-design/plots';
-import Move3ColumnsOfData from '../../../data-transfer/move-3-columns-of-data';
+import { Move3ColumnsOfData } from '../../../data-transfer/move-columns-of-data';
 
 
 

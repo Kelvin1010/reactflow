@@ -19,11 +19,11 @@ import {
 import { CodeNodeWrapper } from "./nodes/simplenode/CodeNode";
 import { ImageNodeWrapper } from "./nodes/simplenode/ImageNode";
 import { TextNodeWrapper } from "./nodes/simplenode/TextNode";
-import PieChartNode, { PieChartWrapper } from "./nodes/visualization/pie/pie-chart-node";
+import { PieChartWrapper } from "./nodes/visualization/pie/pie-chart-node";
 import { AreaChartOutlined, BarChartOutlined, DotChartOutlined, LineChartOutlined, PieChartOutlined, BorderInnerOutlined } from '@ant-design/icons';
 import { BarChartWrapper } from "./nodes/visualization/column/bar-chart-node";
 import { AreaBasicChartWrapper } from "./nodes/visualization/area/area-chart-basic-node";
-import ScatterPlotChartNode, { ScatterPlotChartWrapper } from "./nodes/visualization/scatter/scatter-plot-chart-node";
+import { ScatterPlotChartWrapper } from "./nodes/visualization/scatter/scatter-plot-chart-node";
 import { MultipleLinePlotAnimationWrapper } from "./nodes/visualization/line/multiple-line-plot-animation";
 import { StepLineChartWrapper } from "./nodes/visualization/line/step-line-chart";
 import { AreaStackedChartWrapper } from "./nodes/visualization/area/area-stacked-chart";
@@ -38,6 +38,8 @@ import { PercentBarChartWrapper } from "./nodes/visualization/bar/percent-bar-ch
 import { BubblePlotChartWrapper } from "./nodes/visualization/scatter/bubble-plot-chart";
 import { Bubble3dChartWrapper } from "./nodes/visualization/scatter/bubble-3d-chart";
 import { HeatmapShapezieChartWrapper } from "./nodes/visualization/heatmap/heatmap-shapesize-chart";
+import { TreeMapsChartWrapper } from "./nodes/visualization/advanced-plots/tree-maps-chart";
+import ReadFile from "../read-files/ReadFile";
 
 export function SidebarAnalysis() {
   const onDragStart = (event, nodeType) => {
@@ -48,6 +50,19 @@ export function SidebarAnalysis() {
   return (
     <aside>
       <Accordion defaultIndex={[0, 1, 2]} allowToggle allowMultiple>
+        <AccordionItem border="none">
+          <h2>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
+                Open File To Draw
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel>
+            <ReadFile />
+          </AccordionPanel>
+        </AccordionItem>
       <AccordionItem border="none">
           <h2>
             <AccordionButton>
@@ -238,13 +253,38 @@ export function SidebarAnalysis() {
               <h2>
                 <AccordionButton>
                   <Box flex="1" textAlign="left">
-                    <BorderInnerOutlined /> Radar
+                    <BorderInnerOutlined /> Advanced Plots
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel>
-                hhhh
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <Box flex="1" textAlign="left">
+                      <BorderInnerOutlined /> Tree maps
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel>
+                  <TreeMapsChartWrapper.Sidebar onDragStart={onDragStart} />
+                </AccordionPanel>
+              </AccordionItem>
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <Box flex="1" textAlign="left">
+                      <BorderInnerOutlined /> Radar
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel>
+                  hhhh
+                </AccordionPanel>
+              </AccordionItem>
               </AccordionPanel>
             </AccordionItem>
             <AccordionItem>

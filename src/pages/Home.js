@@ -12,7 +12,8 @@ function Home() {
         <div className='interaction'>
           <Sidebar />
           {/* <Interactive /> */}
-          <Image src='./logo-data-analysis-1.jpg' height={'92vh'} width={'100vw'} />
+          <div className="img-bg"></div>
+          {/* <Image src='./img/bg.webp' height={'92vh'} width={'100vw'} /> */}
         </div>
     </>
   )

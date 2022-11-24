@@ -1,7 +1,7 @@
-import ReactFlow, { addEdge, Background, Controls, Position, useEdgesState, useNodesState } from "react-flow-renderer";
-import { useCallback, useRef, useState } from "react";
+import ReactFlow, {addEdge, Background, Controls, getRectOfNodes, MarkerType, Position, useEdgesState, useNodesState } from "react-flow-renderer";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { nanoid } from "nanoid";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { atomState } from "../atom";
 import { Sidebar, SidebarAnalysis } from "../components/analysis/sidebar-analysis";
 import { Header } from "../components/header";
@@ -44,6 +44,14 @@ import { PercentBarChartWrapper } from "../components/analysis/nodes/visualizati
 import { BubblePlotChartWrapper } from "../components/analysis/nodes/visualization/scatter/bubble-plot-chart";
 import { Bubble3dChartWrapper } from "../components/analysis/nodes/visualization/scatter/bubble-3d-chart";
 import { HeatmapShapezieChartWrapper } from "../components/analysis/nodes/visualization/heatmap/heatmap-shapesize-chart";
+import { TreeMapsChartWrapper } from "../components/analysis/nodes/visualization/advanced-plots/tree-maps-chart";
+import HeaderAnalytics from "../components/header-analytics";
+import GroupContainer from "../components/analysis/group-container";
+import { createGraphLayout } from "../components/algorithms-layout/layout-elkjs";
+import {file} from '../helper/autodraw/stateRecoil';
+import NodeAutoDraw from "../components/analysis/node-autodraw";
+
+
 
 const nodeTypes = {
   "example-data": ExampleDataWrapped,
@@ -75,19 +83,25 @@ const nodeTypes = {
   merge: MergeWrapper,
   sort: SortWrapper,
   "group-node": GroupWrapper,
+  "tree-map-chart": TreeMapsChartWrapper,
   stats: StatsWrapper,
   "group-chart": GroupChartWrapper,
   "line-chart": LineChartWrapper,
   "pie-chart": PieChartWrapper,
   "code-node": CodeNodeWrapper,
   "text-node": TextNodeWrapper,
-  "image-node": ImageNodeWrapper
+  "image-node": ImageNodeWrapper,
+  groupNode: GroupContainer,
+  nodeautodraw: NodeAutoDraw,
 };
 
 const rfStyle = {
 //   backgroundColor: "#1A192B",
-backgroundColor: "black",
+    backgroundColor: "black",
 };
+
+let id = 0;
+const getId = () => `dndnode_${id++}`;
 
 function Analysis() {
   const setValueAtom = useSetRecoilState(atomState);
@@ -95,6 +109,10 @@ function Analysis() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const selectedNodes = Array.from(nodes).filter((n) => n.selected);
+  const tt = getRectOfNodes(selectedNodes);
+  const filehere = useRecoilValue(file)
+  const [variant, setVariant] = useState('cross');
 
   const onConnect = useCallback((connection) => setEdges((eds) => addEdge(connection, eds)), [setEdges]);
 
@@ -136,6 +154,100 @@ function Analysis() {
     [reactFlowInstance, setNodes],
   );
 
+  const handleCreateGroup = () => {
+    if(selectedNodes?.length > 1){
+      const newNodeGroup = {
+        id: getId(),
+        data: { label: `node group-${getId()}` },
+        type: 'groupTp',
+        position: {x: tt.x, y: tt.y},
+        style: { backgroundColor: 'rgba(0,89,220,.08)', width: Number(tt.width+50), height: Number(tt.height+50), paddingTop: '20px', color:'black', zIndex:1 }
+      }
+      setNodes([...nodes, newNodeGroup])
+      selectedNodes?.forEach(item => {
+        setNodes(nds => nds.map(node => node.id === item.id ? ({...node,
+          style:{zIndex: 999},
+          position: {x: 5, y: 30},
+          parentNode: newNodeGroup.id, 
+          extent: 'parent'
+        }): node))
+      })
+      createGraphLayout(
+        nodes,
+        edges
+      );
+    }
+  }
+
+  //Take data to draw 
+  useEffect(() => {
+    if(filehere.length > 0) {
+      let nodes = filehere.map((item) => (
+        {
+          id: String(item.name),
+          type: 'nodeautodraw',
+          data: { 
+            label: `${item.name}`, 
+            input: `${item.input}`,
+            output: `${item.output}`,
+            inof:`${item.input_name}`,
+            typenode: `${item.op_type}`
+          },
+          position: {x: 0, y: 0},
+        }
+      ));
+      let edges = [];
+      if (Array.isArray(filehere)) {
+        filehere?.forEach((item)=> {
+          let inputs = item.input_name?.split(",");
+          if(inputs) inputs.forEach((input)=> {
+            if(!nodes.find((node)=> {return node.id == input;})) {
+              nodes.push({
+                  id: String(input),
+                  type: `nodeautodraw`,
+                  data: { 
+                    label: input, 
+                    input: null,
+                  },
+                  position: {x: 0, y: 0},
+              })
+            }
+          })
+        })
+
+        filehere?.forEach((item)=> {
+          let outputName = item.name;
+          if (item.input_name) {
+            let inputs = item.input_name?.split(",");
+            inputs.forEach((input) => {
+              edges.push({
+                id: String(`edge-${input}-${outputName}`),
+                target: outputName,
+                source: input,
+                animated: true,
+                type: 'step',
+                style: { stroke: 'white' },
+                markerEnd: {
+                  type: MarkerType.ArrowClosed,
+                },
+              })
+            })
+          }
+        })
+      }
+      
+      (async () => {
+        const res = await createGraphLayout(
+          nodes,
+          edges
+        );
+        setNodes(res.nodes)
+        setEdges(res.edges)
+      })()
+    }
+    handleCreateGroup()
+  }, [filehere])
+
   return (
     <Box height="100%">
       <Header />
@@ -147,6 +259,7 @@ function Analysis() {
             edges={edges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
+            onMouseUp={handleCreateGroup}
             onConnect={onConnect}
             onInit={setReactFlowInstance}
             onDrop={onDrop}
@@ -156,7 +269,7 @@ function Analysis() {
             style={rfStyle}
           >
             <Controls showZoom={true} />
-            <Background />
+            <Background variant={variant} size={1} color="#99b3ec"/>
           </ReactFlow>
         </div>
       </div>

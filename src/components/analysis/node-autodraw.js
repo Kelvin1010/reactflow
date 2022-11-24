@@ -1,11 +1,9 @@
-import { Box, Image } from '@chakra-ui/react';
-import React, { memo } from 'react'
+import { CloseIcon } from '@chakra-ui/icons';
+import { Box } from '@chakra-ui/react';
+import React from 'react'
 import { Handle, useReactFlow } from 'react-flow-renderer';
 import { useRecoilValue } from 'recoil';
-import { file } from '../../../helper/autodraw/stateRecoil';
-import { CloseIcon } from '@chakra-ui/icons';
-import '../../../style/style.css';
-
+import {file} from '../../helper/autodraw/stateRecoil'
 
 const customColorBackground = [
     'navy',
@@ -23,8 +21,7 @@ const customColorBackground = [
     'indianred'
 ]
 
-function CustomNode({data,isConnectable,id}) {
-
+function NodeAutoDraw({data,isConnectable,id}) {
     const filehere = useRecoilValue(file);
     const reactFlowInstance = useReactFlow();
 
@@ -87,5 +84,4 @@ function CustomNode({data,isConnectable,id}) {
     )
 }
 
-export default memo(CustomNode)
-
+export default NodeAutoDraw

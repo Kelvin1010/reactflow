@@ -10,6 +10,7 @@ import city2 from '../../../../data/city2.json';
 import databubble from '../../../../data/data-bubble.json';
 import culinary from '../../../../data/culinary.json';
 import sex from '../../../../data/sex.json';
+import ModalNodes from "../../../modals/modal-nodes";
 
 function ExampleData({ onCallback, data }) {
   const [option, setOption] = useState("");
@@ -29,19 +30,21 @@ function ExampleData({ onCallback, data }) {
     setOption(value);
     onCallback({ output, input: { option: value } });
   }
-
+  
   return (
-    <Select value={option} onChange={handleChange}>
-      <option value="countries_indicators">Countries Indicator</option>
-      <option value="culinary">Culinary</option>
-      <option value="data-bubble">Data Bubble</option>
-      <option value="sex">Sex</option>
-      <option value="city">Citys</option>
-      <option value="city2">2 City</option>
-      <option value="ufo_signhtings">UFO Sightings</option>
-      <option value="continents">Continents</option>
-      <option value="gdp">GDP</option>
-    </Select>
+    <>
+      <Select value={option} onChange={handleChange}>
+        <option value="countries_indicators">Countries Indicator</option>
+        <option value="culinary">Culinary</option>
+        <option value="data-bubble">Data Bubble</option>
+        <option value="sex">Sex</option>
+        <option value="city">Citys</option>
+        <option value="city2">2 City</option>
+        <option value="ufo_signhtings">UFO Sightings</option>
+        <option value="continents">Continents</option>
+        <option value="gdp">GDP</option>
+      </Select>
+    </>
   );
 }
 
@@ -79,6 +82,7 @@ function Sidebar({ onDragStart }) {
 }
 
 export function ExampleDataWrapper(props) {
+
   return (
     <NodeContainer {...props} label="Dữ liệu mẫu">
       <ExampleData />

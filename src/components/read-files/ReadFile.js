@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { read, utils } from 'xlsx';
-import { fileState } from '../../helper/autodraw/atom'
+import { fileState } from '../../helper/autodraw/atom';
 
 function ReadFile() {
     const [data,setData] = useRecoilState(fileState);

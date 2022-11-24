@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
 import { NodeContainer } from '../../../node-container';
 import { Pie } from '@ant-design/plots';
-import Move2ColumnsOfData from '../../../data-transfer/move-2-columns-of-data';
+import { Move2ColumnsOfData } from '../../../data-transfer/move-columns-of-data';
 
 const options = {
     reponsive: true,

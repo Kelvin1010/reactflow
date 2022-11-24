@@ -19,11 +19,13 @@ main{
 }
 .top_section{
     display: flex;
+    justify-content: center;
     align-items:center;
     padding:20px 15px;
 }
 .logo{
     font-size: 20px;
+    color: white !important;
 }
 .bars{
     display: flex;
@@ -52,4 +54,14 @@ main{
 
 .link_text{
     font-size: 14px;
+}
+
+.edit-header:hover{
+    color: blueviolet;
+}
+
+.head-1{
+    flex: 1;
+    display: flex;
+    align-items: center;
 }

@@ -15,7 +15,7 @@ import { useRecoilValue } from "recoil";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
 import { NodeContainer } from "../../../node-container";
 import { atomState } from "../../../../../atom";
-import Move2ColumnsOfData from "../../../data-transfer/move-2-columns-of-data";
+import { Move2ColumnsOfData } from "../../../data-transfer/move-columns-of-data";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 

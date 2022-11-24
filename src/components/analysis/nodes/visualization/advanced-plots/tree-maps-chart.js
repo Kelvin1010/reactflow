@@ -4,8 +4,8 @@ import { Box, FormControl, FormLabel, Select, Stack } from "@chakra-ui/react";
 import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-renderer";
 import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
-import { Bar, Column } from '@ant-design/plots';
-import { Move3ColumnsOfData } from '../../../data-transfer/move-columns-of-data';
+import { Treemap } from '@ant-design/plots';
+import { Move2ColumnsOfData } from '../../../data-transfer/move-columns-of-data';
 
 
 const options = {
@@ -15,11 +15,9 @@ const options = {
 const initialState = {
     xColumn: "",
     yColumn: "",
-    zColumn: "",
 };
 
-
-function BarGroupChart({ onCallback, id }) {
+function TreeMapsChart({ onCallback, id }) {
 
     const { getNode } = useReactFlow();
     const allNodes = useNodes();
@@ -37,9 +35,8 @@ function BarGroupChart({ onCallback, id }) {
         var initialInput = {
             xColumn: columnsParent.includes(input.xColumn) ? input.xColumn : columnsParent[0],
             yColumn: columnsParent.includes(input.yColumn) ? input.yColumn : columnsParent[0],
-            zColumn: columnsParent.includes(input.zColumn) ? input.zColumn : columnsParent[0],
         };
-        var output =  Move3ColumnsOfData(atomParent.data.output, initialInput);
+        var output = Move2ColumnsOfData(atomParent.data.output, initialInput);
         setInput(initialInput);
         setOutput(output);
         onCallback({ output: atomParent.data.output, input: initialInput });
@@ -55,29 +52,20 @@ function BarGroupChart({ onCallback, id }) {
 
     function handleChangeInput(event) {
         var { value, name } = event.target;
-        var output =  Move3ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
+        var output = Move2ColumnsOfData(atomParent.data.output, { ...input, [name]: value });
         setInput({ ...input, [name]: value });
         setOutput(output);
         onCallback({ input: { ...input, [name]: value }, output: atomParent.data.output });
     }
 
-    const data = output;
-
+    const data = {
+        name: 'root',
+        children: output,
+    };
+    console.log(data)
     const config = {
         data,
-        isGroup: true,
-        xField: 'x',
-        yField: 'y',
-        seriesField: 'z',
-        marginRatio: 0,
-        label: {
-          position: 'right',
-          // 'left', 'middle', 'right'
-          offset: 4,
-        },
-        barStyle: {
-          radius: [2, 2, 0, 0],
-        },
+        colorField: 'x',
     };
 
     return (
@@ -108,39 +96,30 @@ function BarGroupChart({ onCallback, id }) {
                     ))}
                     </Select>
                 </FormControl>
-                <FormControl>
-                    <FormLabel>z-axis</FormLabel>
-                    <Select name="zColumn" value={input.zColumn} onChange={handleChangeInput}>
-                    {columns.map((value) => (
-                        <option key={value} value={value}>
-                        {value}
-                        </option>
-                    ))}
-                    </Select>
-                </FormControl>
-                <Bar {...config} />
+                <Treemap {...config} />
                 </Stack>
             )}
         </Box>
     )
 }
 
-export default BarGroupChart
-  
+export default TreeMapsChart
+
+
 function Sidebar({ onDragStart }) {
     return (
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, "bar-group-chart")} draggable>
-        Biểu đồ cột nhóm ngang
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, "tree-map-chart")} draggable>
+        Biểu đồ Tree Maps
       </div>
     );
 }
   
-export function BarGroupChartWrapper(props) {
+export function TreeMapsChartWrapper(props) {
     return (
-      <NodeContainer {...props} label="Biểu đồ cột nhóm ngang" isLeftHandle className="chart-container">
-        <BarGroupChart />
+      <NodeContainer {...props} label="Biểu đồ Tree Maps" isLeftHandle className="chart-container">
+        <TreeMapsChart />
       </NodeContainer>
     );
 }
   
-BarGroupChartWrapper.Sidebar = Sidebar;
+TreeMapsChartWrapper.Sidebar = Sidebar;

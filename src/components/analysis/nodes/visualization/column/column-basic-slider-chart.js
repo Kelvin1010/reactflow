@@ -5,7 +5,7 @@ import { getIncomers, useEdges, useNodes, useReactFlow } from "react-flow-render
 import { useRecoilValue } from 'recoil';
 import { atomState } from '../../../../../atom';
 import { Column } from '@ant-design/plots';
-import Move2ColumnsOfData from '../../../data-transfer/move-2-columns-of-data';
+import { Move2ColumnsOfData } from '../../../data-transfer/move-columns-of-data';
 
 
 const options = {

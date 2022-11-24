@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Analytics, MenuOpen, FileOpen } from '@mui/icons-material';
 import '../../App.css';
 import { Link } from 'react-router-dom';
+import { SettingsIcon } from '@chakra-ui/icons';
 
 function Sidebar({children}) {
 
@@ -14,16 +15,16 @@ function Sidebar({children}) {
           icon:<Analytics/>
     },
     {
-        path:"/openfile",
-        name:"Open File To Draw",
-        icon:<FileOpen/>
-    },
+        path: "/settings",
+        name: "Setting",
+        icon: <SettingsIcon />
+    }
   ]
   return (
     <div className="container">
         <div style={{width: isOpen ? "200px" : "50px"}} className="sidebar">
             <div className="top_section">
-                <h3 style={{display: isOpen ? "block" : "none"}} className="logo">Options</h3>
+                <h3 style={{display: isOpen ? "block" : "none"}} className="logo" color='white'>Features</h3>
                 <div style={{marginLeft: isOpen ? "50px" : "0px"}} className="bars">
                     <MenuOpen onClick={toggle}/>
                 </div>
